@@ -288,3 +288,142 @@ body {
   background: #b388ff;
   box-shadow: 0 0 12px rgba(179, 136, 255, 0.7);
 }
+.module-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+
+.module-card {
+  padding: 20px;
+  border-radius: 20px;
+  background: linear-gradient(180deg, var(--panel), var(--panel-2));
+  border: 1px solid var(--border);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.24);
+}
+
+.module-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.module-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.module-meta {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.module-status-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.mini-pill {
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.module-panels {
+  display: grid;
+  grid-template-columns: 1.2fr 1.5fr 1fr;
+  gap: 16px;
+}
+
+.sensor-panel {
+  padding: 16px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.sensor-panel h3 {
+  margin: 0 0 12px;
+  font-size: 1rem;
+}
+
+.sensor-list {
+  display: grid;
+  gap: 10px;
+}
+
+.sensor-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.sensor-label {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.sensor-value {
+  font-weight: 700;
+}
+
+.temp-good,
+.voltage-good {
+  color: #cbffe2;
+}
+
+.temp-warn,
+.voltage-warn {
+  color: #ffe4b2;
+}
+
+.temp-bad,
+.voltage-bad {
+  color: #ffd5db;
+}
+
+.mini-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.mini-metric {
+  padding: 14px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.mini-metric-label {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin-bottom: 6px;
+}
+
+.mini-metric-value {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.module-footer {
+  margin-top: 16px;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+@media (max-width: 1100px) {
+  .module-panels {
+    grid-template-columns: 1fr;
+  }
+}

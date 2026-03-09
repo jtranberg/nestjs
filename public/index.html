@@ -1,27 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Moment Energy | Battery Ops Dashboard</title>
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="apple-touch-icon" href="/favicon.svg" />
-<meta name="theme-color" content="#0b1020">
-  <link rel="stylesheet" href="/styles.css" />
-</head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Moment Energy | Battery Ops Dashboard</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+    <meta name="theme-color" content="#0b1020" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+
   <body>
     <div class="app-shell">
-        <section class="connection-strip">
-  <div id="bleBadge" class="connection-badge">
-    <span class="indicator-dot indicator-offline"></span>
-    <span>BLE: --</span>
-  </div>
-
-  <div id="internetBadge" class="connection-badge">
-    <span class="indicator-dot indicator-offline"></span>
-    <span>Internet: --</span>
-  </div>
-</section>
+      <!-- =========================
+           HEADER
+      ========================== -->
       <header class="topbar">
         <div>
           <h1>Energy Ops Dashboard</h1>
@@ -30,34 +23,69 @@
         <div class="topbar-pill">NestJS Demo</div>
       </header>
 
-      <section class="hero-grid">
-        <div class="hero-card score-card">
-          <h2>System Health</h2>
-          <div id="scoreValue" class="score-value">--</div>
-          <div class="progress-track">
-            <div id="scoreBar" class="progress-bar"></div>
+      <!-- =========================
+           CONNECTIVITY STATUS
+      ========================== -->
+      <section class="section-block">
+        <div class="section-head">
+          <h2>Connectivity Status</h2>
+          <span class="subtle">Firmware + cloud link indicators</span>
+        </div>
+
+        <div class="connection-strip">
+          <div id="bleBadge" class="connection-badge">
+            <span class="indicator-dot indicator-offline"></span>
+            <span>BLE: --</span>
           </div>
-        </div>
 
-        <div class="hero-card">
-          <h2>Alerts</h2>
-          <div id="alertsValue" class="metric-value">--</div>
-          <p>Open warning + critical conditions</p>
-        </div>
-
-        <div class="hero-card">
-          <h2>Points</h2>
-          <div id="pointsValue" class="metric-value">0</div>
-          <p>Earn points by keeping systems green</p>
-        </div>
-
-        <div class="hero-card">
-          <h2>Streak</h2>
-          <div id="streakValue" class="metric-value">0</div>
-          <p>Consecutive refreshes with strong performance</p>
+          <div id="internetBadge" class="connection-badge">
+            <span class="indicator-dot indicator-offline"></span>
+            <span>Internet: --</span>
+          </div>
         </div>
       </section>
 
+      <!-- =========================
+           SYSTEM OVERVIEW
+      ========================== -->
+      <section class="section-block">
+        <div class="section-head">
+          <h2>System Overview</h2>
+          <span class="subtle">Live health, alerts, and operator score</span>
+        </div>
+
+        <div class="hero-grid">
+          <div class="hero-card score-card">
+            <h2>System Health</h2>
+            <div id="scoreValue" class="score-value">--</div>
+            <div class="progress-track">
+              <div id="scoreBar" class="progress-bar"></div>
+            </div>
+          </div>
+
+          <div class="hero-card">
+            <h2>Alerts</h2>
+            <div id="alertsValue" class="metric-value">--</div>
+            <p>Open warning + critical conditions</p>
+          </div>
+
+          <div class="hero-card">
+            <h2>Points</h2>
+            <div id="pointsValue" class="metric-value">0</div>
+            <p>Earn points by keeping systems green</p>
+          </div>
+
+          <div class="hero-card">
+            <h2>Streak</h2>
+            <div id="streakValue" class="metric-value">0</div>
+            <p>Consecutive refreshes with strong performance</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- =========================
+           ACHIEVEMENTS
+      ========================== -->
       <section class="section-block">
         <div class="section-head">
           <h2>Achievements</h2>
@@ -66,11 +94,15 @@
         <div id="badges" class="badges"></div>
       </section>
 
+      <!-- =========================
+           SENSOR FLEET
+      ========================== -->
       <section class="section-block">
         <div class="section-head">
           <h2>Sensor Fleet</h2>
-          <span class="subtle">Auto-refresh every 5 seconds</span>
+          <span class="subtle">Battery module sensor groups · Auto-refresh every 5 seconds</span>
         </div>
+
         <div id="sensorGrid" class="sensor-grid"></div>
       </section>
     </div>
