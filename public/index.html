@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -20,7 +20,10 @@
           <h1>Energy Ops Dashboard</h1>
           <p>Live battery telemetry + gamified monitoring</p>
         </div>
-        <div class="topbar-pill">NestJS Demo</div>
+        <div class="header-actions">
+          <button id="themeToggle" class="theme-toggle-btn">🌙 Dark</button>
+          <div class="topbar-pill">NestJS Demo</div>
+        </div>
       </header>
 
       <!-- =========================
@@ -100,7 +103,9 @@
       <section class="section-block">
         <div class="section-head">
           <h2>Sensor Fleet</h2>
-          <span class="subtle">Battery module sensor groups · Auto-refresh every 5 seconds</span>
+          <span class="subtle"
+            >Battery module sensor groups · Auto-refresh every 5 seconds</span
+          >
         </div>
 
         <div id="sensorGrid" class="sensor-grid"></div>

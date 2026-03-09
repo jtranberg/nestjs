@@ -2,6 +2,36 @@ let points = 0;
 let streak = 0;
 
 /* =========================
+   THEME TOGGLE
+========================= */
+function applyTheme(theme) {
+  const button = document.getElementById('themeToggle');
+
+  if (theme === 'light') {
+    document.body.classList.add('light-theme');
+    if (button) button.textContent = '☀️ Light';
+  } else {
+    document.body.classList.remove('light-theme');
+    if (button) button.textContent = '🌙 Dark';
+  }
+
+  localStorage.setItem('energy-dashboard-theme', theme);
+}
+
+function initThemeToggle() {
+  const savedTheme = localStorage.getItem('energy-dashboard-theme') || 'dark';
+  applyTheme(savedTheme);
+
+  const button = document.getElementById('themeToggle');
+  if (!button) return;
+
+  button.addEventListener('click', () => {
+    const isLight = document.body.classList.contains('light-theme');
+    applyTheme(isLight ? 'dark' : 'light');
+  });
+}
+
+/* =========================
    STATUS + TAB HELPERS
 ========================= */
 function updateTabStatus(alerts = 0, modules = []) {
@@ -84,8 +114,8 @@ function tempClass(value) {
 }
 
 function voltageClass(value) {
-  if (value < 3.45 || value > 4.15) return 'voltage-bad';
-  if (value < 3.58 || value > 4.05) return 'voltage-warn';
+  if (value < 11.4 || value > 12.8) return 'voltage-bad';
+  if (value < 11.7 || value > 12.5) return 'voltage-warn';
   return 'voltage-good';
 }
 
@@ -137,7 +167,7 @@ function temperatureCard(module) {
   );
 }
 
-function voltageCard(module, startIndex, endIndex, title) {
+function voltageCard(module, startIndex, endIndex, title, bankTotalLabel, bankTotalValue) {
   const voltages = Array.isArray(module.voltages) ? module.voltages.slice(startIndex, endIndex) : [];
   const voltageStats = voltages.map((value, idx) =>
     statBox(`V${startIndex + idx + 1}`, `<span class="${voltageClass(value)}">${value}V</span>`)
@@ -145,8 +175,16 @@ function voltageCard(module, startIndex, endIndex, title) {
 
   return cardShell(
     title,
-    `${module.name ?? 'Battery Module'} · cell monitor group`,
+    `${module.name ?? 'Battery Module'} · 12V submodule bank`,
     `<div class="sensor-stats">${voltageStats}</div>
+     <div class="sensor-stats" style="margin-top: 12px;">
+       ${statBox(
+         bankTotalLabel,
+         `<span class="voltage-good">${
+           bankTotalValue != null ? Number(bankTotalValue).toFixed(2) : '--'
+         }V</span>`
+       )}
+     </div>
      <div class="updated">Updated: ${module.updatedAt ? new Date(module.updatedAt).toLocaleTimeString() : '--'}</div>`,
     module.status ?? 'healthy'
   );
@@ -187,6 +225,27 @@ function statusCard(module) {
       ${statBox('BLE', String(module.bleStatus ?? '--').toUpperCase())}
       ${statBox('Cloud', String(module.internetStatus ?? '--').toUpperCase())}
     </div>
+
+    <div class="sensor-stats" style="margin-top: 12px;">
+      ${statBox(
+        'Bank A Total',
+        `${module.bankATotalVoltage != null ? Number(module.bankATotalVoltage).toFixed(2) : '--'}V`
+      )}
+      ${statBox(
+        'Bank B Total',
+        `${module.bankBTotalVoltage != null ? Number(module.bankBTotalVoltage).toFixed(2) : '--'}V`
+      )}
+    </div>
+
+    <div class="total-voltage-highlight">
+      <div class="total-voltage-label">Total Available Voltage</div>
+      <div class="total-voltage-value">${
+        module.totalAvailableVoltage != null
+          ? Number(module.totalAvailableVoltage).toFixed(2)
+          : '--'
+      }V</div>
+    </div>
+
     <div class="updated">Updated: ${module.updatedAt ? new Date(module.updatedAt).toLocaleTimeString() : '--'}</div>`,
     module.status ?? 'healthy'
   );
@@ -210,8 +269,8 @@ function renderSensorFleet(modules = []) {
 
   return modules.map((module) => [
     temperatureCard(module),
-    voltageCard(module, 0, 5, 'Voltage Bank A'),
-    voltageCard(module, 5, 10, 'Voltage Bank B'),
+    voltageCard(module, 0, 5, 'Voltage Bank A', 'Bank A Total', module.bankATotalVoltage),
+    voltageCard(module, 5, 10, 'Voltage Bank B', 'Bank B Total', module.bankBTotalVoltage),
     gasCard(module),
     motionCard(module),
     statusCard(module),
@@ -287,5 +346,6 @@ async function loadDashboard() {
   }
 }
 
+initThemeToggle();
 loadDashboard();
 setInterval(loadDashboard, 5000);

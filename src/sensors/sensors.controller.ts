@@ -13,6 +13,9 @@ interface BatteryModule {
   internetStatus: LinkStatus;
   temperatures: number[];
   voltages: number[];
+  bankATotalVoltage: number;
+  bankBTotalVoltage: number;
+  totalAvailableVoltage: number;
   gasPpm: number;
   co2Ppm: number;
   laserMm: number;
@@ -23,6 +26,10 @@ interface BatteryModule {
 function jitter(base: number, range: number, decimals = 1): number {
   const value = base + (Math.random() * range - range / 2);
   return Number(value.toFixed(decimals));
+}
+
+function sum(values: number[], decimals = 1): number {
+  return Number(values.reduce((acc, val) => acc + val, 0).toFixed(decimals));
 }
 
 @Controller('api/sensors')
@@ -37,26 +44,34 @@ export class SensorsController {
       jitter(24.9, 3),
     ];
 
+    // 10 submodules at ~12V each
     const voltages = [
-      jitter(3.71, 0.08, 2),
-      jitter(3.69, 0.08, 2),
-      jitter(3.72, 0.08, 2),
-      jitter(3.70, 0.08, 2),
-      jitter(3.68, 0.08, 2),
-      jitter(3.71, 0.08, 2),
-      jitter(3.73, 0.08, 2),
-      jitter(3.69, 0.08, 2),
-      jitter(3.70, 0.08, 2),
-      jitter(3.72, 0.08, 2),
+      jitter(12.1, 0.5, 2),
+      jitter(12.0, 0.5, 2),
+      jitter(12.2, 0.5, 2),
+      jitter(11.9, 0.5, 2),
+      jitter(12.1, 0.5, 2),
+      jitter(12.0, 0.5, 2),
+      jitter(12.2, 0.5, 2),
+      jitter(11.8, 0.5, 2),
+      jitter(12.1, 0.5, 2),
+      jitter(12.0, 0.5, 2),
     ];
+
+    const bankA = voltages.slice(0, 5);
+    const bankB = voltages.slice(5, 10);
+
+    const bankATotalVoltage = sum(bankA, 1);
+    const bankBTotalVoltage = sum(bankB, 1);
+    const totalAvailableVoltage = Number((bankATotalVoltage + bankBTotalVoltage).toFixed(1));
 
     const maxTemp = Math.max(...temperatures);
     const minVoltage = Math.min(...voltages);
 
     let moduleStatus: ModuleStatus = 'healthy';
-    if (maxTemp >= 38 || minVoltage < 3.45) {
+    if (maxTemp >= 38 || minVoltage < 11.4) {
       moduleStatus = 'critical';
-    } else if (maxTemp >= 32 || minVoltage < 3.58) {
+    } else if (maxTemp >= 32 || minVoltage < 11.7) {
       moduleStatus = 'warning';
     }
 
@@ -69,6 +84,9 @@ export class SensorsController {
       internetStatus: 'online',
       temperatures,
       voltages,
+      bankATotalVoltage,
+      bankBTotalVoltage,
+      totalAvailableVoltage,
       gasPpm: jitter(42, 12, 0),
       co2Ppm: jitter(615, 40, 0),
       laserMm: jitter(41, 4, 0),
