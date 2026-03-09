@@ -1,25 +1,14 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ValidationPipe } from '@nestjs/common';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { NestExpressApplication } from '@nestjs/platform-express';
+import { join } from 'path';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
-  // Enable DTO validation
-  app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
+  app.useStaticAssets(join(__dirname, '..', 'public'));
 
-  // Swagger setup
-  const config = new DocumentBuilder()
-    .setTitle('Task API')
-    .setDescription('NestJS demo CRUD API')
-    .setVersion('1.0')
-    .build();
-
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
-
-  await app.listen(process.env.PORT ?? 3000);
+  await app.listen(3000);
+  console.log(`Server running on http://localhost:3000`);
 }
-
 bootstrap();
