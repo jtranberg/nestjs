@@ -1,13 +1,15 @@
 import { Controller, Get } from '@nestjs/common';
 
 type SensorStatus = 'healthy' | 'warning' | 'critical';
+type LinkStatus = 'online' | 'offline' | 'degraded';
+type BleStatus = 'ready' | 'pairing' | 'offline';
 
 interface SensorReading {
   id: string;
   name: string;
   temperature: number;
   voltage: number;
-  soc: number; // state of charge
+  soc: number;
   status: SensorStatus;
   location: string;
   updatedAt: string;
@@ -16,11 +18,7 @@ interface SensorReading {
 @Controller('api/sensors')
 export class SensorsController {
   @Get()
-  getSensors(): {
-    score: number;
-    alerts: number;
-    sensors: SensorReading[];
-  } {
+  getSensors() {
     const sensors: SensorReading[] = [
       {
         id: 'bat-101',
@@ -67,6 +65,15 @@ export class SensorsController {
     const alerts = sensors.filter((s) => s.status !== 'healthy').length;
     const score = Math.max(0, 100 - alerts * 18);
 
-    return { score, alerts, sensors };
+    const bleStatus: BleStatus = 'ready';
+    const internetStatus: LinkStatus = 'online';
+
+    return {
+      score,
+      alerts,
+      bleStatus,
+      internetStatus,
+      sensors,
+    };
   }
 }

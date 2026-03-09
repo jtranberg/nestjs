@@ -13,7 +13,34 @@ function updateTabStatus(alerts, sensors) {
   }
 }
 
-function badgeMarkup(score, alerts, sensors) {
+function getBleIndicatorClass(status) {
+  if (status === 'ready') return 'indicator-ready';
+  if (status === 'pairing') return 'indicator-pairing';
+  return 'indicator-offline';
+}
+
+function getInternetIndicatorClass(status) {
+  if (status === 'online') return 'indicator-online';
+  if (status === 'degraded') return 'indicator-degraded';
+  return 'indicator-offline';
+}
+
+function updateConnectionBadges(bleStatus, internetStatus) {
+  const bleBadge = document.getElementById('bleBadge');
+  const internetBadge = document.getElementById('internetBadge');
+
+  bleBadge.innerHTML = `
+    <span class="indicator-dot ${getBleIndicatorClass(bleStatus)}"></span>
+    <span>BLE: ${bleStatus.toUpperCase()}</span>
+  `;
+
+  internetBadge.innerHTML = `
+    <span class="indicator-dot ${getInternetIndicatorClass(internetStatus)}"></span>
+    <span>Internet: ${internetStatus.toUpperCase()}</span>
+  `;
+}
+
+function badgeMarkup(score, alerts, sensors, bleStatus, internetStatus) {
   const healthyCount = sensors.filter((s) => s.status === 'healthy').length;
   const criticalCount = sensors.filter((s) => s.status === 'critical').length;
 
@@ -24,6 +51,12 @@ function badgeMarkup(score, alerts, sensors) {
   if (alerts <= 1) badges.push({ text: '🛡 Low Alert Load', type: 'good' });
   if (criticalCount >= 1) badges.push({ text: '🚨 Critical Watch', type: 'bad' });
   if (score >= 70 && score < 90) badges.push({ text: '⚡ Stable Operator', type: 'warn' });
+
+  if (bleStatus === 'ready') badges.push({ text: '📶 BLE Ready', type: 'good' });
+  if (bleStatus === 'pairing') badges.push({ text: '🔄 BLE Pairing', type: 'warn' });
+  if (internetStatus === 'online') badges.push({ text: '🌐 Cloud Online', type: 'good' });
+  if (internetStatus === 'degraded') badges.push({ text: '🟠 Internet Degraded', type: 'warn' });
+  if (internetStatus === 'offline') badges.push({ text: '🔴 Cloud Offline', type: 'bad' });
 
   return badges
     .map((b) => `<div class="badge ${b.type}">${b.text}</div>`)
@@ -72,8 +105,8 @@ async function loadDashboard() {
     document.getElementById('alertsValue').textContent = data.alerts;
     document.getElementById('scoreBar').style.width = `${data.score}%`;
 
-    // update tab icon/status
     updateTabStatus(data.alerts, data.sensors);
+    updateConnectionBadges(data.bleStatus, data.internetStatus);
 
     if (data.score >= 80) {
       points += 25;
@@ -87,11 +120,16 @@ async function loadDashboard() {
     document.getElementById('streakValue').textContent = streak;
 
     document.getElementById('badges').innerHTML =
-      badgeMarkup(data.score, data.alerts, data.sensors);
+      badgeMarkup(
+        data.score,
+        data.alerts,
+        data.sensors,
+        data.bleStatus,
+        data.internetStatus
+      );
 
     document.getElementById('sensorGrid').innerHTML =
       data.sensors.map(sensorMarkup).join('');
-
   } catch (err) {
     console.error('Dashboard load failed:', err);
   }
