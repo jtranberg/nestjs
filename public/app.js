@@ -9,6 +9,29 @@ let themeManager = null;
 let chartManager = null;
 
 /* =========================
+   SYSTEM CLOCK
+========================= */
+function startSystemClock() {
+  const clockEl = document.getElementById("systemClock");
+  if (!clockEl) return;
+
+  function updateClock() {
+    const now = new Date();
+
+    const time = now.toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    });
+
+    clockEl.textContent = time;
+  }
+
+  updateClock();
+  setInterval(updateClock, 1000);
+}
+
+/* =========================
    SYSTEM MOOD
 ========================= */
 function applySystemMood({
@@ -37,8 +60,7 @@ function applySystemMood({
     ? modules.some((module) => module.status === "warning")
     : false;
 
-  const isOffline =
-    bleStatus === "offline" || internetStatus === "offline";
+  const isOffline = bleStatus === "offline" || internetStatus === "offline";
 
   let mood = "mood-healthy";
 
@@ -46,11 +68,7 @@ function applySystemMood({
     mood = "mood-critical";
   } else if (hasWarning) {
     mood = "mood-warning";
-  } else if (
-    alerts > 0 ||
-    internetStatus === "degraded" ||
-    bleStatus === "pairing"
-  ) {
+  } else if (alerts > 0 || internetStatus === "degraded" || bleStatus === "pairing") {
     mood = "mood-warning";
   } else if (isOffline) {
     mood = "mood-offline";
@@ -182,7 +200,7 @@ async function loadDashboard() {
     const sensorGrid = document.getElementById("sensorGrid");
 
     if (scoreValue) scoreValue.textContent = `${score}%`;
-    if (alertsValue) alertsValue.textContent = alerts;
+    if (alertsValue) alertsValue.textContent = String(alerts);
     if (scoreBar) scoreBar.style.width = `${score}%`;
 
     updateTabStatus(alerts, modules);
@@ -204,8 +222,8 @@ async function loadDashboard() {
       streak = 0;
     }
 
-    if (pointsValue) pointsValue.textContent = points;
-    if (streakValue) streakValue.textContent = streak;
+    if (pointsValue) pointsValue.textContent = String(points);
+    if (streakValue) streakValue.textContent = String(streak);
 
     if (badgesEl) {
       badgesEl.innerHTML = badgeMarkup(
@@ -221,12 +239,11 @@ async function loadDashboard() {
       sensorGrid.innerHTML = renderSensorFleet(modules);
     }
 
-    const firstModule = modules[0];
+    const firstModule = Array.isArray(modules) && modules.length > 0 ? modules[0] : null;
+
     if (firstModule) {
       if (firstModule.totalAvailableVoltage != null) {
-        chartManager?.updateVoltageTrend(
-          Number(firstModule.totalAvailableVoltage)
-        );
+        chartManager?.updateVoltageTrend(Number(firstModule.totalAvailableVoltage));
       }
 
       const firstTemp = Array.isArray(firstModule.temperatures)
@@ -283,6 +300,8 @@ async function loadDashboard() {
    INIT
 ========================= */
 document.addEventListener("DOMContentLoaded", () => {
+  startSystemClock();
+
   themeManager = new ThemeManager({
     buttonId: "themeToggle",
     storageKey: "energy-dashboard-theme",
