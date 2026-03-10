@@ -75,7 +75,7 @@ body.mood-warning::before {
     radial-gradient(circle at 20% 90%, rgba(255, 140, 0, 0.534), transparent 50%),
     radial-gradient(circle at 50% 0%, rgba(255, 219, 120, 0.377), transparent 60%);
   opacity: 1;
-  animation: heraWarningPulse 2s ease-in-out infinite;
+  animation: heraWarningPulse 1.5s ease-in-out infinite;
 }
 
 body.mood-critical::before {
@@ -84,16 +84,16 @@ body.mood-critical::before {
     radial-gradient(circle at 20% 90%, rgba(255,0,80,0.22), transparent 50%),
     radial-gradient(circle at 50% 0%, rgba(255,0,40,0.14), transparent 60%);
   opacity: 1;
-  animation: heraCriticalPulse 1s ease-in-out infinite;
+  animation: heraCriticalPulse 5s ease-in-out infinite;
 }
 
 body.mood-excellent::before {
   background:
-    radial-gradient(circle at 80% 10%, rgba(85, 167, 255, 0.438), transparent 45%),
-    radial-gradient(circle at 20% 90%, rgba(17, 230, 219, 0.349), transparent 50%),
-    radial-gradient(circle at 50% 0%, rgba(60, 255, 255, 0.671), transparent 60%);
+    radial-gradient(circle at 80% 10%, rgba(85, 167, 255, 0.548), transparent 45%),
+    radial-gradient(circle at 20% 90%, rgba(17, 230, 219, 0.288), transparent 50%),
+    radial-gradient(circle at 50% 0%, rgba(60, 255, 255, 0.541), transparent 60%);
   opacity: 1;
-  animation: heraEnergy 4s ease-in-out infinite;
+  animation: heraEnergy 3s ease-in-out infinite;
 }
 
 /* =========================

@@ -106,7 +106,23 @@ body.light-theme .badge.bad {
 /* =========================
    LIGHT MODE ACHIEVEMENTS
 ========================= */
+/* =========================
+   CHART BUTTON FIX - LIGHT MODE
+========================= */
 
+body.light-theme .chart-toggle,
+body.light-theme .chart-btn {
+  color: rgba(20, 28, 45, 0.92); /* darker readable text */
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+/* hover state */
+body.light-theme .chart-toggle:hover,
+body.light-theme .chart-btn:hover {
+  background: rgba(255, 255, 255, 0.95);
+  color: rgba(10, 18, 35, 1);
+}
 
 
 
@@ -579,6 +595,29 @@ body.light-theme .theme-toggle-btn {
 /* =========================
    TOTAL VOLTAGE VISIBILITY
 ========================= */
+/* =========================
+   VOLTAGE CHART BUTTON FIX
+========================= */
+
+#toggleVoltageChart {
+  transition: color 0.25s ease, background 0.25s ease, border 0.25s ease;
+}
+
+/* Light theme override */
+button[id^="toggle"] {
+  transition: color 0.25s ease, background 0.25s ease, border 0.25s ease;
+}
+
+body.light-theme button[id^="toggle"] {
+  color: rgba(20, 28, 45, 0.95);
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+body.light-theme button[id^="toggle"]:hover {
+  background: rgba(255, 255, 255, 1);
+  color: rgba(10, 18, 35, 1);
+}
 
 .total-voltage-value {
   color: #dff3ff;
