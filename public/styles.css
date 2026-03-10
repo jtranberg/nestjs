@@ -631,7 +631,9 @@ body.light-theme .total-voltage-value {
   margin-top: 0;
 }
 
-#voltageTrendChart {
+#voltageTrendChart,
+#tempTrendChart,
+#bankComparisonChart {
   width: 100%;
   height: 320px !important;
 }

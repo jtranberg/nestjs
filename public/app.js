@@ -9,6 +9,52 @@ let themeManager = null;
 let chartManager = null;
 
 /* =========================
+   SYSTEM MOOD
+========================= */
+function applySystemMood({
+  score = 0,
+  alerts = 0,
+  modules = [],
+  bleStatus = "offline",
+  internetStatus = "offline",
+}) {
+  const body = document.body;
+  if (!body) return;
+
+  body.classList.remove(
+    "mood-stable",
+    "mood-warning",
+    "mood-critical",
+    "mood-offline",
+    "mood-excellent"
+  );
+
+  const hasCritical = Array.isArray(modules)
+    ? modules.some((module) => module.status === "critical")
+    : false;
+
+  const isOffline = bleStatus === "offline" || internetStatus === "offline";
+
+  let mood = "mood-stable";
+
+  if (hasCritical) {
+    mood = "mood-critical";
+  } else if (isOffline) {
+    mood = "mood-offline";
+  } else if (
+    alerts > 1 ||
+    internetStatus === "degraded" ||
+    bleStatus === "pairing"
+  ) {
+    mood = "mood-warning";
+  } else if (score >= 90 && alerts === 0) {
+    mood = "mood-excellent";
+  }
+
+  body.classList.add(mood);
+}
+
+/* =========================
    STATUS + TAB HELPERS
 ========================= */
 function updateTabStatus(alerts = 0, modules = []) {
@@ -125,7 +171,7 @@ async function loadDashboard() {
     const scoreBar = document.getElementById("scoreBar");
     const pointsValue = document.getElementById("pointsValue");
     const streakValue = document.getElementById("streakValue");
-    const badges = document.getElementById("badges");
+    const badgesEl = document.getElementById("badges");
     const sensorGrid = document.getElementById("sensorGrid");
 
     if (scoreValue) scoreValue.textContent = `${score}%`;
@@ -134,6 +180,14 @@ async function loadDashboard() {
 
     updateTabStatus(alerts, modules);
     updateConnectionBadges(bleStatus, internetStatus);
+
+    applySystemMood({
+      score,
+      alerts,
+      modules,
+      bleStatus,
+      internetStatus,
+    });
 
     if (score >= 80) {
       points += 25;
@@ -146,8 +200,8 @@ async function loadDashboard() {
     if (pointsValue) pointsValue.textContent = points;
     if (streakValue) streakValue.textContent = streak;
 
-    if (badges) {
-      badges.innerHTML = badgeMarkup(
+    if (badgesEl) {
+      badgesEl.innerHTML = badgeMarkup(
         score,
         alerts,
         modules,
@@ -175,15 +229,28 @@ async function loadDashboard() {
       if (firstTemp != null) {
         chartManager?.updateTemperatureTrend(Number(firstTemp));
       }
+
+      chartManager?.updateBankComparison(
+        Number(firstModule.bankATotalVoltage ?? 0),
+        Number(firstModule.bankBTotalVoltage ?? 0)
+      );
     }
   } catch (err) {
     console.error("Dashboard load failed:", err);
 
-    const badges = document.getElementById("badges");
+    const badgesEl = document.getElementById("badges");
     const sensorGrid = document.getElementById("sensorGrid");
 
-    if (badges) {
-      badges.innerHTML = `
+    applySystemMood({
+      score: 0,
+      alerts: 99,
+      modules: [],
+      bleStatus: "offline",
+      internetStatus: "offline",
+    });
+
+    if (badgesEl) {
+      badgesEl.innerHTML = `
         <div class="badge bad">⚠️ Telemetry Unavailable</div>
       `;
     }
