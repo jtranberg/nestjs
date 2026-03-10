@@ -111,7 +111,31 @@
         <div id="sensorGrid" class="sensor-grid"></div>
       </section>
     </div>
+<section class="panel chart-panel">
+  <div class="panel-header">
+    <h2>Total Voltage Trend</h2>
+    <button id="toggleVoltageChart" class="chart-toggle-btn">
+      ▶ Show Chart
+    </button>
+  </div>
 
-    <script src="/app.js"></script>
+  <div id="voltageChartWrap" class="chart-wrap collapsed">
+    <canvas id="voltageTrendChart"></canvas>
+  </div>
+</section>
+<section class="panel chart-panel">
+  <div class="panel-header">
+    <h2>Temperature Trend</h2>
+    <button id="toggleTempChart" class="chart-toggle-btn">
+      ▶ Show Chart
+    </button>
+  </div>
+
+  <div id="tempChartWrap" class="chart-wrap collapsed">
+    <canvas id="tempTrendChart"></canvas>
+  </div>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="module" src="./app.js"></script>
   </body>
 </html>

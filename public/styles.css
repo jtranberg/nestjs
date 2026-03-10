@@ -105,31 +105,7 @@ body.light-theme .badge.bad {
    LIGHT MODE ACHIEVEMENTS
 ========================= */
 
-body.light-theme .badge {
-  font-weight: 700;
-  border: 1px solid transparent;
-}
 
-/* GOOD (green achievements) */
-body.light-theme .badge.good {
-  background: #e6f6ec;
-  color: #0f8a4b;
-  border-color: #bfe7cc;
-}
-
-/* WARNING (amber achievements) */
-body.light-theme .badge.warn {
-  background: #fff3d6;
-  color: #b37400;
-  border-color: #f2d19a;
-}
-
-/* BAD / ALERT (red achievements) */
-body.light-theme .badge.bad {
-  background: #fde7e9;
-  color: #c62839;
-  border-color: #f2b7be;
-}
 
 
 .theme-toggle-btn {
@@ -330,9 +306,26 @@ body.light-theme .theme-toggle-btn {
 }
 
 .sensor-stats {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+}
+
+@media (max-width: 700px) {
+  .topbar,
+  .sensor-top,
+  .panel-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .sensor-stats {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .sensor-stats {
+    grid-template-columns: 1fr;
+  }
 }
 
 .stat-box {
@@ -577,12 +570,7 @@ body.light-theme .theme-toggle-btn {
   font-weight: 700;
 }
 
-.total-voltage-value {
-  font-size: 2.4rem;
-  font-weight: 800;
-  color: #1a5174;
-  text-shadow: 0 0 16px rgba(85, 168, 255, 0.22);
-}
+
 
 /* =========================
    TOTAL VOLTAGE VISIBILITY
@@ -598,4 +586,61 @@ body.light-theme .theme-toggle-btn {
 body.light-theme .total-voltage-value {
   color: #0b3d91;
   text-shadow: none;
+}
+.chart-panel {
+  margin-top: 20px;
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.chart-toggle-btn {
+  background: rgba(255, 255, 255, 0.08);
+  color: #f5f7ff;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 10px;
+  padding: 8px 14px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.chart-toggle-btn:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.chart-wrap {
+  overflow: hidden;
+  max-height: 420px;
+  opacity: 1;
+  margin-top: 16px;
+  transition: max-height 0.35s ease, opacity 0.25s ease, margin-top 0.25s ease;
+}
+
+.chart-wrap.collapsed {
+  max-height: 0;
+  opacity: 0;
+  margin-top: 0;
+}
+
+#voltageTrendChart {
+  width: 100%;
+  height: 320px !important;
+}
+
+/* Light theme support */
+body.light-theme .chart-toggle-btn {
+  background: rgba(0, 0, 0, 0.05);
+  color: #1e293b;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+body.light-theme .chart-toggle-btn:hover {
+  background: rgba(0, 0, 0, 0.08);
 }
