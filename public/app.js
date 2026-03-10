@@ -22,7 +22,7 @@ function applySystemMood({
   if (!body) return;
 
   body.classList.remove(
-    "mood-stable",
+    "mood-healthy",
     "mood-warning",
     "mood-critical",
     "mood-offline",
@@ -33,20 +33,27 @@ function applySystemMood({
     ? modules.some((module) => module.status === "critical")
     : false;
 
-  const isOffline = bleStatus === "offline" || internetStatus === "offline";
+  const hasWarning = Array.isArray(modules)
+    ? modules.some((module) => module.status === "warning")
+    : false;
 
-  let mood = "mood-stable";
+  const isOffline =
+    bleStatus === "offline" || internetStatus === "offline";
+
+  let mood = "mood-healthy";
 
   if (hasCritical) {
     mood = "mood-critical";
-  } else if (isOffline) {
-    mood = "mood-offline";
+  } else if (hasWarning) {
+    mood = "mood-warning";
   } else if (
-    alerts > 1 ||
+    alerts > 0 ||
     internetStatus === "degraded" ||
     bleStatus === "pairing"
   ) {
     mood = "mood-warning";
+  } else if (isOffline) {
+    mood = "mood-offline";
   } else if (score >= 90 && alerts === 0) {
     mood = "mood-excellent";
   }

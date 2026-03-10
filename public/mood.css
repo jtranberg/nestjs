@@ -1,0 +1,119 @@
+/* =========================
+   HERA MOOD ATMOSPHERE
+========================= */
+
+body {
+  position: relative;
+}
+
+.app-shell {
+  position: relative;
+  z-index: 1;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+/* =========================
+   HERA MOOD BACKGROUNDS
+========================= */
+
+body.mood-healthy {
+  background:
+    radial-gradient(circle at 80% 10%, rgba(85,168,255,0.65), transparent 55%),
+    radial-gradient(circle at 20% 90%, rgba(77,216,255,0.45), transparent 60%),
+    radial-gradient(circle at 50% 0%, rgba(60,140,255,0.30), transparent 65%),
+    linear-gradient(180deg,#071220,#0b1020);
+}
+
+body.mood-warning {
+  background:
+    radial-gradient(circle at 80% 10%, rgba(255,180,40,0.85), transparent 60%),
+    radial-gradient(circle at 20% 90%, rgba(255,120,0,0.65), transparent 65%),
+    radial-gradient(circle at 50% 0%, rgba(255,210,120,0.40), transparent 70%),
+    linear-gradient(180deg,#2c1b04,#1a1108);
+}
+
+body.mood-critical {
+  background:
+    radial-gradient(circle at 80% 10%, rgba(255,60,80,0.95), transparent 60%),
+    radial-gradient(circle at 20% 90%, rgba(255,0,80,0.75), transparent 65%),
+    radial-gradient(circle at 50% 0%, rgba(255,0,40,0.50), transparent 70%),
+    linear-gradient(180deg,#2a050c,#16040a);
+}
+
+body.mood-offline {
+  background:
+    radial-gradient(circle at 80% 10%, rgba(120,130,180,0.45), transparent 60%),
+    radial-gradient(circle at 20% 90%, rgba(100,90,160,0.35), transparent 65%),
+    radial-gradient(circle at 50% 0%, rgba(90,90,130,0.25), transparent 70%),
+    linear-gradient(180deg,#0a1018,#101522);
+}
+
+body.mood-excellent {
+  background:
+    radial-gradient(circle at 80% 10%, rgba(85,168,255,0.85), transparent 60%),
+    radial-gradient(circle at 20% 90%, rgba(43,214,123,0.75), transparent 65%),
+    radial-gradient(circle at 50% 0%, rgba(60,255,170,0.50), transparent 70%),
+    linear-gradient(180deg,#061620,#0b1020);
+}
+
+/* =========================
+   HERA PULSE LAYER
+========================= */
+
+body.mood-warning::before {
+  background:
+    radial-gradient(circle at 80% 10%, rgba(255,190,60,0.22), transparent 45%),
+    radial-gradient(circle at 20% 90%, rgba(255,140,0,0.18), transparent 50%),
+    radial-gradient(circle at 50% 0%, rgba(255,220,120,0.12), transparent 60%);
+  opacity: 1;
+  animation: heraWarningPulse 8s ease-in-out infinite;
+}
+
+body.mood-critical::before {
+  background:
+    radial-gradient(circle at 80% 10%, rgba(255,70,90,0.28), transparent 45%),
+    radial-gradient(circle at 20% 90%, rgba(255,0,80,0.22), transparent 50%),
+    radial-gradient(circle at 50% 0%, rgba(255,0,40,0.14), transparent 60%);
+  opacity: 1;
+  animation: heraCriticalPulse 4s ease-in-out infinite;
+}
+
+body.mood-excellent::before {
+  background:
+    radial-gradient(circle at 80% 10%, rgba(85,168,255,0.20), transparent 45%),
+    radial-gradient(circle at 20% 90%, rgba(43,214,123,0.16), transparent 50%),
+    radial-gradient(circle at 50% 0%, rgba(60,255,170,0.10), transparent 60%);
+  opacity: 1;
+  animation: heraEnergy 8s ease-in-out infinite;
+}
+
+/* =========================
+   HERA KEYFRAMES
+========================= */
+
+@keyframes heraWarningPulse {
+  0%   { opacity: 0.35; }
+  50%  { opacity: 0.75; }
+  100% { opacity: 0.35; }
+}
+
+@keyframes heraCriticalPulse {
+  0%   { opacity: 0.4; }
+  50%  { opacity: 0.95; }
+  100% { opacity: 0.4; }
+}
+
+@keyframes heraEnergy {
+  0%   { opacity: 0.35; }
+  50%  { opacity: 0.65; }
+  100% { opacity: 0.35; }
+}
