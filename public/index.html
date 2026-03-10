@@ -16,19 +16,28 @@
       <!-- =========================
            HEADER
       ========================== -->
-      <header class="topbar">
-        <div>
-          <h1>Energy Ops Dashboard</h1>
-          <p>Live battery telemetry + gamified monitoring</p>
-        </div>
-        <div class="header-actions">
-         <div id="systemClock" class="system-clock">
-  --:--:--
-</div>
-          <button id="themeToggle" class="theme-toggle-btn">🌙 Dark</button>
-          <div class="topbar-pill">Moment Energy</div>
-        </div>
-      </header>
+    <header class="topbar">
+  <div class="topbar-brand">
+    <img src="/moment.png" alt="Moment Energy" class="brand-logo" />
+
+    <div class="brand-text">
+      <h1>Energy Ops Dashboard</h1>
+      <p>Live battery telemetry + gamified monitoring</p>
+    </div>
+  </div>
+
+  <div class="header-actions">
+
+    <div class="system-meta">
+      <div id="systemClock" class="system-clock">--:--:--</div>
+      <div id="lastUpdate" class="system-update">Last Update: --</div>
+    </div>
+
+    <button id="themeToggle" class="theme-toggle-btn">🌙 Dark</button>
+
+    <!-- <div class="topbar-pill">Moment Energy</div> -->
+  </div>
+</header>
 
       <!-- =========================
            CONNECTIVITY STATUS

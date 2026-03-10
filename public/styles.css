@@ -3,7 +3,7 @@
   --panel: #121933;
   --panel-2: #182142;
   --text: #eef3ff;
-  --muted: #9aa8d6;
+  --muted: #0d2679;
   --good: #b3f8d3;
   --warn: #ffb020;
   --bad: #ff5c6c;
@@ -16,13 +16,43 @@ body.light-theme {
   --panel: #ffffff;
   --panel-2: #f7f9fd;
   --text: #182033;
-  --muted: #5d6b8a;
+  --muted: #0b2a6d;
   --good: #55d18f;
   --warn: #d99000;
   --bad: #d64555;
   --accent: #2f7de1;
   --border: rgba(24, 32, 51, 0.08);
 }
+
+//logo
+/* =========================
+   BRAND
+========================= */
+
+.topbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.brand-logo {
+   height: 36px;
+  margin-right: 10px; 
+  width: auto;
+  object-fit: contain;
+}
+
+.brand-text h1 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.brand-text p {
+  margin: 2px 0 0 0;
+  opacity: 0.75;
+  font-size: 13px;
+}
+
 
 /* =========================
    LIGHT MODE SENSOR COLORS
@@ -756,9 +786,20 @@ body.light-theme .chart-container {
 }
 .system-clock {
   font-family: monospace;
-  font-size: 14px;
+  font-size: 13px;
+  letter-spacing: 1px;
   color: #010c18;
   padding: 6px 10px;
   border-radius: 8px;
   background: rgba(192, 222, 247, 0.781);
+}
+.system-update {
+  font-size: 11px;
+  opacity: 0.7;
+}
+.system-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-right: 10px;
 }
