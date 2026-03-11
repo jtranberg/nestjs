@@ -36,7 +36,7 @@ export class ChartManager {
     this.ensurePluginsRegistered();
   }
 
-  init() {
+    init() {
     this.initVoltageChartToggle();
     this.initTempChartToggle();
     this.initBankChartToggle();
@@ -44,6 +44,10 @@ export class ChartManager {
     this.updateVoltageIntelUI();
     this.updateTemperatureIntelUI();
     this.updateBankIntelUI();
+
+    this.updateVoltageAssistant();
+    this.updateTemperatureAssistant();
+    this.updateBankAssistant();
   }
 
   ensurePluginsRegistered() {
@@ -529,6 +533,7 @@ export class ChartManager {
     });
 
     this.updateVoltageIntelUI();
+    this.updateVoltageAssistant();
   }
 
   buildTempTrendChart() {
@@ -595,6 +600,7 @@ export class ChartManager {
     });
 
     this.updateTemperatureIntelUI();
+        this.updateTemperatureAssistant();
   }
 
     getBankBalanceStatus() {
@@ -776,7 +782,91 @@ export class ChartManager {
       },
     });
         this.updateBankIntelUI();
+        this.updateBankAssistant();
   }
+
+//assistant
+updateVoltageAssistant() {
+  const el = document.getElementById("voltageAssistant");
+  if (!el) return;
+
+  const forecast = this.getVoltageForecastStatus();
+  const deviation = this.getVoltageDeviationStatus();
+
+  let message = "Voltage stable.";
+
+  if (forecast.label === "Falling") {
+    message = "Voltage trend falling. Monitor system load.";
+  }
+
+  if (forecast.label === "Rising") {
+    message = "Voltage trend rising slightly. System stable.";
+  }
+
+  if (deviation.label === "Alert") {
+    message = "Voltage deviation detected. Investigate module health.";
+  }
+
+  el.textContent = `Assistant: ${message}`;
+}
+
+updateTemperatureAssistant() {
+  const el = document.getElementById("tempAssistant");
+  if (!el) return;
+
+  const forecast = this.getTemperatureForecastStatus();
+  const deviation = this.getTemperatureDeviationStatus();
+
+  let message = "Temperature stable.";
+
+  if (forecast.label === "Rising") {
+    message = "Thermal trend rising. Watch cooling efficiency.";
+  }
+
+  if (forecast.label === "Cooling") {
+    message = "Thermal trend improving.";
+  }
+
+  if (deviation.label === "Alert") {
+    message = "Unexpected thermal spike detected.";
+  }
+
+  el.textContent = `Assistant: ${message}`;
+}
+
+
+updateBankAssistant() {
+  const el = document.getElementById("bankAssistant");
+  if (!el) return;
+
+  const balance = this.getBankBalanceStatus();
+  const leader = this.getBankLeaderStatus();
+
+  let message = "Bank balance healthy.";
+
+  if (balance.label === "Watch") {
+    message = "Small bank voltage spread detected. Continue monitoring.";
+  }
+
+  if (balance.label === "Imbalanced") {
+    message = "Bank imbalance detected. Inspect load distribution and module health.";
+  }
+
+  if (leader.label === "Bank A Leading") {
+    message += " Bank A is currently higher.";
+  }
+
+  if (leader.label === "Bank B Leading") {
+    message += " Bank B is currently higher.";
+  }
+
+  if (leader.label === "Even" && balance.label === "Healthy") {
+    message = "Banks are balanced and operating normally.";
+  }
+
+  el.textContent = `Assistant: ${message}`;
+}
+
 
   initVoltageChartToggle() {
     const toggleBtn = document.getElementById("toggleVoltageChart");
@@ -859,7 +949,7 @@ export class ChartManager {
     });
   }
 
-  updateVoltageTrend(newValue) {
+    updateVoltageTrend(newValue) {
     const now = new Date();
     const label = now.toLocaleTimeString([], {
       hour: "2-digit",
@@ -873,6 +963,7 @@ export class ChartManager {
     }
 
     this.updateVoltageIntelUI(newValue);
+    this.updateVoltageAssistant();
 
     if (this.voltageTrendChart) {
       const projection = this.getVoltageChartProjection();
@@ -884,7 +975,7 @@ export class ChartManager {
     }
   }
 
-  updateTemperatureTrend(newValue) {
+    updateTemperatureTrend(newValue) {
     const now = new Date();
     const label = now.toLocaleTimeString([], {
       hour: "2-digit",
@@ -898,6 +989,7 @@ export class ChartManager {
     }
 
     this.updateTemperatureIntelUI(newValue);
+    this.updateTemperatureAssistant();
 
     if (this.tempTrendChart) {
       const projection = this.getTemperatureChartProjection();
@@ -909,11 +1001,12 @@ export class ChartManager {
     }
   }
 
-  updateBankComparison(bankA, bankB) {
+    updateBankComparison(bankA, bankB) {
     this.bankTotals.bankA = Number(bankA ?? 0);
     this.bankTotals.bankB = Number(bankB ?? 0);
-    
+
     this.updateBankIntelUI();
+    this.updateBankAssistant();
 
     if (this.bankComparisonChart) {
       this.bankComparisonChart.data.datasets[0].data = [
@@ -924,12 +1017,17 @@ export class ChartManager {
     }
   }
 
-  redrawForTheme() {
+    redrawForTheme() {
     if (this.voltageTrendChart) this.buildVoltageTrendChart();
     if (this.tempTrendChart) this.buildTempTrendChart();
     if (this.bankComparisonChart) this.buildBankComparisonChart();
 
     this.updateVoltageIntelUI();
     this.updateTemperatureIntelUI();
+    this.updateBankIntelUI();
+
+    this.updateVoltageAssistant();
+    this.updateTemperatureAssistant();
+    this.updateBankAssistant();
   }
 }

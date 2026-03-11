@@ -16,28 +16,27 @@
       <!-- =========================
            HEADER
       ========================== -->
-    <header class="topbar">
-  <div class="topbar-brand">
-    <img src="/moment.png" alt="Moment Energy" class="brand-logo" />
+      <header class="topbar">
+        <div class="topbar-brand">
+          <img src="/moment.png" alt="Moment Energy" class="brand-logo" />
 
-    <div class="brand-text">
-      <h1>Energy Ops Dashboard</h1>
-      <p>Live battery telemetry + gamified monitoring</p>
-    </div>
-  </div>
+          <div class="brand-text">
+            <h1>Energy Ops Dashboard</h1>
+            <p>Live battery telemetry + gamified monitoring</p>
+          </div>
+        </div>
 
-  <div class="header-actions">
+        <div class="header-actions">
+          <div class="system-meta">
+            <div id="systemClock" class="system-clock">--:--:--</div>
+            <div id="lastUpdate" class="system-update">Last Update: --</div>
+          </div>
 
-    <div class="system-meta">
-      <div id="systemClock" class="system-clock">--:--:--</div>
-      <div id="lastUpdate" class="system-update">Last Update: --</div>
-    </div>
+          <button id="themeToggle" class="theme-toggle-btn">🌙 Dark</button>
 
-    <button id="themeToggle" class="theme-toggle-btn">🌙 Dark</button>
-
-    <!-- <div class="topbar-pill">Moment Energy</div> -->
-  </div>
-</header>
+          <!-- <div class="topbar-pill">Moment Energy</div> -->
+        </div>
+      </header>
 
       <!-- =========================
            CONNECTIVITY STATUS
@@ -116,69 +115,103 @@
       <section class="section-block">
         <div class="section-head">
           <h2>Sensor Fleet</h2>
-          <span class="subtle"
-            >Battery module sensor groups · Auto-refresh every 5 seconds</span
-          >
+          <span class="subtle">
+            Battery module sensor groups · Auto-refresh every 5 seconds
+          </span>
         </div>
 
         <div id="sensorGrid" class="sensor-grid"></div>
       </section>
     </div>
-<section class="panel chart-panel">
-  <div class="panel-header">
-    <div class="intel-row">
-  <div class="intel-pill" id="forecastStatus" data-tone="neutral">Forecast: Stable (+0.00V)</div>
-  <div class="intel-pill" id="deviationStatus" data-tone="neutral">Deviation: Normal (+0.00V)</div>
-</div>
-    <h2>Total Voltage Trend</h2>
-    <button id="toggleVoltageChart" class="chart-toggle-btn">
-      ▶ Show Chart
-    </button>
-  </div>
 
-  <div id="voltageChartWrap" class="chart-wrap collapsed">
-    <canvas id="voltageTrendChart"></canvas>
-  </div>
-</section>
-<section class="panel chart-panel">
-  <div class="panel-header">
-    <div class="intel-row">
-  <div class="intel-pill" id="tempForecastStatus" data-tone="neutral">
-    Thermal Forecast: Stable (+0.00°C)
-  </div>
-  <div class="intel-pill" id="tempDeviationStatus" data-tone="neutral">
-    Thermal Risk: Normal (+0.00°C)
-  </div>
-</div>
-    <h2>Temperature Trend</h2>
-    <button id="toggleTempChart" class="chart-toggle-btn">
-      ▶ Show Chart
-    </button>
-  </div>
+    <!-- =========================
+         VOLTAGE TREND
+    ========================== -->
+    <section class="panel chart-panel">
+      <div class="panel-header">
+        <div class="intel-row">
+          <div class="intel-pill" id="forecastStatus" data-tone="neutral">
+            Forecast: Stable (+0.00V)
+          </div>
+          <div class="intel-pill" id="deviationStatus" data-tone="neutral">
+            Deviation: Normal (+0.00V)
+          </div>
+        </div>
 
-  <div id="tempChartWrap" class="chart-wrap collapsed">
-    <canvas id="tempTrendChart"></canvas>
-  </div>
-</section>
-<section class="panel chart-panel">
-  <div class="panel-header">
-    <div class="intel-row">
-  <div class="intel-pill" id="bankBalanceStatus" data-tone="neutral">
-    Balance: Healthy (Δ 0.00V)
-  </div>
-  <div class="intel-pill" id="bankLeaderStatus" data-tone="neutral">
-    Lead: Even
-  </div>
-</div>
-    <h2>Voltage Bank Comparison</h2>
-    <button id="toggleBankChart" class="chart-toggle-btn">▶ Show Chart</button>
-  </div>
+        <h2>Total Voltage Trend</h2>
+        <button id="toggleVoltageChart" class="chart-toggle-btn">
+          ▶ Show Chart
+        </button>
+      </div>
 
-  <div id="bankChartWrap" class="chart-wrap collapsed">
-    <canvas id="bankComparisonChart"></canvas>
-  </div>
-</section>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      <div id="voltageChartWrap" class="chart-wrap collapsed">
+        <canvas id="voltageTrendChart"></canvas>
+      </div>
+
+      <div class="assistant-line" id="voltageAssistant">
+        Assistant: Monitoring voltage trend...
+      </div>
+    </section>
+
+    <!-- =========================
+         TEMPERATURE TREND
+    ========================== -->
+    <section class="panel chart-panel">
+      <div class="panel-header">
+        <div class="intel-row">
+          <div class="intel-pill" id="tempForecastStatus" data-tone="neutral">
+            Thermal Forecast: Stable (+0.00°C)
+          </div>
+          <div class="intel-pill" id="tempDeviationStatus" data-tone="neutral">
+            Thermal Risk: Normal (+0.00°C)
+          </div>
+        </div>
+
+        <h2>Temperature Trend</h2>
+        <button id="toggleTempChart" class="chart-toggle-btn">
+          ▶ Show Chart
+        </button>
+      </div>
+
+      <div id="tempChartWrap" class="chart-wrap collapsed">
+        <canvas id="tempTrendChart"></canvas>
+      </div>
+
+      <div class="assistant-line" id="tempAssistant">
+        Assistant: Monitoring thermal trend...
+      </div>
+    </section>
+
+    <!-- =========================
+         VOLTAGE BANK COMPARISON
+    ========================== -->
+    <section class="panel chart-panel">
+      <div class="panel-header">
+        <div class="intel-row">
+          <div class="intel-pill" id="bankBalanceStatus" data-tone="neutral">
+            Balance: Healthy (Δ 0.00V)
+          </div>
+          <div class="intel-pill" id="bankLeaderStatus" data-tone="neutral">
+            Lead: Even
+          </div>
+        </div>
+
+        <h2>Voltage Bank Comparison</h2>
+        <button id="toggleBankChart" class="chart-toggle-btn">
+          ▶ Show Chart
+        </button>
+      </div>
+
+      <div id="bankChartWrap" class="chart-wrap collapsed">
+        <canvas id="bankComparisonChart"></canvas>
+      </div>
+
+      <div class="assistant-line" id="bankAssistant">
+        Assistant: Monitoring bank balance...
+      </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script type="module" src="./app.js"></script>
   </body>
 </html>
