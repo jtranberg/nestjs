@@ -3,7 +3,7 @@
   --panel: #121933;
   --panel-2: #182142;
   --text: #eef3ff;
-  --muted: #0d2679;
+  --muted: #4468db;
   --good: #b3f8d3;
   --warn: #ffb020;
   --bad: #ff5c6c;
@@ -47,11 +47,12 @@ body.light-theme {
   font-size: 20px;
 }
 
-.brand-text p {
-  margin: 2px 0 0 0;
-  opacity: 0.75;
-  font-size: 13px;
+.topbar .brand-text p {
+  font-size: 1rem;
+  color: #abc6e4;
+  font-weight: 700;
 }
+
 
 
 /* =========================
@@ -784,6 +785,13 @@ body.light-theme .chart-container {
   background: rgba(255, 255, 255, 0.973);
   border: 1px solid rgba(0,0,0,0.08);
 }
+
+.light-theme .topbar .brand-text p {
+  font-size: 1rem;
+  color: #08202b;
+  font-weight: 700;
+}
+
 .system-clock {
   font-family: monospace;
   font-size: 13px;
@@ -802,4 +810,155 @@ body.light-theme .chart-container {
   flex-direction: column;
   align-items: flex-end;
   margin-right: 10px;
+}
+
+//chart 3d
+.chart-panel {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(20, 28, 40, 0.96), rgba(8, 12, 20, 0.98));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 22px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    inset 0 -12px 24px rgba(0, 0, 0, 0.24),
+    0 18px 40px rgba(0, 0, 0, 0.34);
+  transform: perspective(1200px) rotateX(1.2deg);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.chart-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.10) 0%,
+    rgba(255, 255, 255, 0.03) 16%,
+    rgba(255, 255, 255, 0.00) 42%
+  );
+}
+
+.chart-panel::after {
+  content: "";
+  position: absolute;
+  inset: auto 12% -40% 12%;
+  height: 70%;
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(125, 211, 252, 0.10), transparent 70%);
+  filter: blur(30px);
+  opacity: 0.8;
+}
+
+.chart-panel:hover {
+  transform: perspective(1200px) rotateX(0deg) translateY(-2px);
+  border-color: rgba(125, 211, 252, 0.22);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.10),
+    inset 0 -12px 24px rgba(0, 0, 0, 0.22),
+    0 24px 48px rgba(0, 0, 0, 0.42);
+}
+
+.light-theme .chart-panel {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(233, 240, 248, 0.96));
+  border: 1px solid rgba(30, 41, 59, 0.10);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.90),
+    inset 0 -10px 22px rgba(148, 163, 184, 0.12),
+    0 18px 36px rgba(15, 23, 42, 0.12);
+}
+
+.light-theme .chart-panel::before {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.76) 0%,
+    rgba(255, 255, 255, 0.22) 18%,
+    rgba(255, 255, 255, 0.00) 42%
+  );
+}
+
+.light-theme .chart-panel::after {
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.08), transparent 70%);
+}
+
+.chart-wrap canvas {
+  position: relative;
+  z-index: 2;
+}
+.intel-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 10px 0 14px;
+}
+
+.intel-pill {
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-size: 0.84rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+  color: #e2e8f0;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.08),
+    0 8px 18px rgba(0,0,0,0.18);
+}
+
+.intel-pill[data-tone="good"] {
+  color: #bbf7d0;
+  border-color: rgba(34, 197, 94, 0.28);
+  background: rgba(34, 197, 94, 0.12);
+}
+
+.intel-pill[data-tone="neutral"] {
+  color: #dbeafe;
+  border-color: rgba(96, 165, 250, 0.24);
+  background: rgba(96, 165, 250, 0.10);
+}
+
+.intel-pill[data-tone="warn"] {
+  color: #fde68a;
+  border-color: rgba(245, 158, 11, 0.28);
+  background: rgba(245, 158, 11, 0.12);
+}
+
+.intel-pill[data-tone="danger"] {
+  color: #fecaca;
+  border-color: rgba(239, 68, 68, 0.30);
+  background: rgba(239, 68, 68, 0.12);
+}
+
+.light-theme .intel-pill {
+  color: #1e293b;
+  background: rgba(255,255,255,0.72);
+  border-color: rgba(30, 41, 59, 0.10);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.85),
+    0 8px 18px rgba(15,23,42,0.08);
+}
+
+.light-theme .intel-pill[data-tone="good"] {
+  color: #166534;
+  background: rgba(34, 197, 94, 0.10);
+}
+
+.light-theme .intel-pill[data-tone="neutral"] {
+  color: #1d4ed8;
+  background: rgba(59, 130, 246, 0.10);
+}
+
+.light-theme .intel-pill[data-tone="warn"] {
+  color: #b45309;
+  background: rgba(245, 158, 11, 0.12);
+}
+
+.light-theme .intel-pill[data-tone="danger"] {
+  color: #b91c1c;
+  background: rgba(239, 68, 68, 0.10);
 }

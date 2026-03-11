@@ -126,6 +126,10 @@
     </div>
 <section class="panel chart-panel">
   <div class="panel-header">
+    <div class="intel-row">
+  <div class="intel-pill" id="forecastStatus" data-tone="neutral">Forecast: Stable (+0.00V)</div>
+  <div class="intel-pill" id="deviationStatus" data-tone="neutral">Deviation: Normal (+0.00V)</div>
+</div>
     <h2>Total Voltage Trend</h2>
     <button id="toggleVoltageChart" class="chart-toggle-btn">
       ▶ Show Chart
@@ -138,6 +142,14 @@
 </section>
 <section class="panel chart-panel">
   <div class="panel-header">
+    <div class="intel-row">
+  <div class="intel-pill" id="tempForecastStatus" data-tone="neutral">
+    Thermal Forecast: Stable (+0.00°C)
+  </div>
+  <div class="intel-pill" id="tempDeviationStatus" data-tone="neutral">
+    Thermal Risk: Normal (+0.00°C)
+  </div>
+</div>
     <h2>Temperature Trend</h2>
     <button id="toggleTempChart" class="chart-toggle-btn">
       ▶ Show Chart
@@ -150,6 +162,14 @@
 </section>
 <section class="panel chart-panel">
   <div class="panel-header">
+    <div class="intel-row">
+  <div class="intel-pill" id="bankBalanceStatus" data-tone="neutral">
+    Balance: Healthy (Δ 0.00V)
+  </div>
+  <div class="intel-pill" id="bankLeaderStatus" data-tone="neutral">
+    Lead: Even
+  </div>
+</div>
     <h2>Voltage Bank Comparison</h2>
     <button id="toggleBankChart" class="chart-toggle-btn">▶ Show Chart</button>
   </div>
