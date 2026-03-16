@@ -8,7 +8,7 @@ async function bootstrap() {
 
   app.useStaticAssets(join(__dirname, '..', 'public'));
 
-  await app.listen(3000);
+  await app.listen(process.env.PORT || 3000);
   console.log(`Server running on http://localhost:3000`);
 }
 bootstrap();
