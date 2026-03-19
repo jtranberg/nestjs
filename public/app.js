@@ -11,6 +11,7 @@ let chartManager = null;
 const OBSERVABILITY_URL = "/observability";
 const ROLE_STORAGE_KEY = "energy-dashboard-role";
 const DEFAULT_ROLE = "client";
+const MODULE_STORAGE_KEY = "energy-dashboard-module";
 
 const ROLE_ROUTES = {
   client: "./index.html",
@@ -80,6 +81,56 @@ function initRoleSwitcher() {
     goToRolePage(nextRole);
   });
 }
+
+/* =========================
+   MODULE SELECTOR
+========================= */
+function setCurrentModule(moduleId) {
+  localStorage.setItem(MODULE_STORAGE_KEY, moduleId);
+}
+
+function getCurrentModule() {
+  return localStorage.getItem(MODULE_STORAGE_KEY) || "all";
+}
+
+function populateModuleSelect(modules = []) {
+  const select = document.getElementById("moduleSelect");
+  if (!select) return;
+
+  const current = getCurrentModule();
+
+  select.innerHTML = `<option value="all">All Modules</option>`;
+
+  modules.forEach((module, index) => {
+    const id = module.id || module.moduleId || `module-${index + 1}`;
+    const option = document.createElement("option");
+    option.value = id;
+    option.textContent = id;
+    select.appendChild(option);
+  });
+
+  const availableIds = [
+    "all",
+    ...modules.map((module, index) => module.id || module.moduleId || `module-${index + 1}`),
+  ];
+
+  select.value = availableIds.includes(current) ? current : "all";
+}
+
+function initModuleSwitcher() {
+  const select = document.getElementById("moduleSelect");
+  if (!select) return;
+
+  select.addEventListener("change", (event) => {
+    const target = event.target;
+    const value =
+      target && "value" in target ? target.value : "all";
+
+    setCurrentModule(value);
+    loadDashboard();
+  });
+}
+
 /* =========================
    SYSTEM CLOCK
 ========================= */
@@ -140,7 +191,11 @@ function applySystemMood({
     mood = "mood-critical";
   } else if (hasWarning) {
     mood = "mood-warning";
-  } else if (alerts > 0 || internetStatus === "degraded" || bleStatus === "pairing") {
+  } else if (
+    alerts > 0 ||
+    internetStatus === "degraded" ||
+    bleStatus === "pairing"
+  ) {
     mood = "mood-warning";
   } else if (isOffline) {
     mood = "mood-offline";
@@ -357,6 +412,18 @@ async function loadDashboard() {
     const internetStatus = data.internetStatus ?? "offline";
     const modules = Array.isArray(data.modules) ? data.modules : [];
 
+    populateModuleSelect(modules);
+
+    const selectedModule = getCurrentModule();
+
+    const filteredModules =
+      selectedModule === "all"
+        ? modules
+        : modules.filter((module, index) => {
+            const id = module.id || module.moduleId || `module-${index + 1}`;
+            return id === selectedModule;
+          });
+
     const scoreValue = document.getElementById("scoreValue");
     const alertsValue = document.getElementById("alertsValue");
     const scoreBar = document.getElementById("scoreBar");
@@ -369,13 +436,13 @@ async function loadDashboard() {
     if (alertsValue) alertsValue.textContent = String(alerts);
     if (scoreBar) scoreBar.style.width = `${score}%`;
 
-    updateTabStatus(alerts, modules);
+    updateTabStatus(alerts, filteredModules);
     updateConnectionBadges(bleStatus, internetStatus);
 
     applySystemMood({
       score,
       alerts,
-      modules,
+      modules: filteredModules,
       bleStatus,
       internetStatus,
     });
@@ -395,21 +462,26 @@ async function loadDashboard() {
       badgesEl.innerHTML = badgeMarkup(
         score,
         alerts,
-        modules,
+        filteredModules,
         bleStatus,
         internetStatus
       );
     }
 
     if (sensorGrid) {
-      sensorGrid.innerHTML = renderSensorFleet(modules);
+      sensorGrid.innerHTML = renderSensorFleet(filteredModules);
     }
 
-    const firstModule = Array.isArray(modules) && modules.length > 0 ? modules[0] : null;
+    const firstModule =
+      Array.isArray(filteredModules) && filteredModules.length > 0
+        ? filteredModules[0]
+        : null;
 
     if (firstModule) {
       if (firstModule.totalAvailableVoltage != null) {
-        chartManager?.updateVoltageTrend(Number(firstModule.totalAvailableVoltage));
+        chartManager?.updateVoltageTrend(
+          Number(firstModule.totalAvailableVoltage)
+        );
       }
 
       const firstTemp = Array.isArray(firstModule.temperatures)
@@ -468,6 +540,7 @@ async function loadDashboard() {
 document.addEventListener("DOMContentLoaded", () => {
   startSystemClock();
   initRoleSwitcher();
+  initModuleSwitcher();
 
   themeManager = new ThemeManager({
     buttonId: "themeToggle",

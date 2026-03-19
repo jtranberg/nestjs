@@ -23,7 +23,7 @@ body.light-theme {
   --accent: #2f7de1;
   --border: rgba(24, 32, 51, 0.08);
 }
-//roles
+
 .role-switcher {
   display: flex;
   flex-direction: column;
@@ -48,7 +48,7 @@ body.light-theme {
   outline: none;
 }
 
-//logo
+
 /* =========================
    BRAND
 ========================= */
@@ -117,9 +117,7 @@ body {
     radial-gradient(circle at top right, rgba(85, 168, 255, 0.18), transparent 25%),
     linear-gradient(180deg, #0a0f1d, #0b1020);
   color: var(--text);
-  body {
   transition: background 0.8s ease, color 0.25s ease;
-}
 }
 
 body.light-theme {
@@ -231,6 +229,12 @@ body.light-theme .theme-toggle-btn {
   background: rgba(85, 168, 255, 0.12);
   border: 1px solid rgba(85, 168, 255, 0.25);
   color: #cfe5ff;
+}
+.module-switcher {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 140px;
 }
 
 .hero-grid {
@@ -854,7 +858,7 @@ body.light-theme .chart-container {
     border-color 0.25s ease;
 }
 
-.chart-panel::before {
+/* .chart-panel::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -865,7 +869,7 @@ body.light-theme .chart-container {
     rgba(255, 255, 255, 0.03) 16%,
     rgba(255, 255, 255, 0.00) 42%
   );
-}
+} */
 
 .chart-panel::after {
   content: "";

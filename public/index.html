@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Moment Energy | Battery Ops Dashboard</title>
+    <title>Moment Energy | Client Dashboard</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/favicon.svg" />
     <meta name="theme-color" content="#0b1020" />
@@ -21,7 +21,7 @@
           <img src="/moment.png" alt="Moment Energy" class="brand-logo" />
 
           <div class="brand-text">
-            <h1>Battery Intelligence Console</h1>
+            <h1>Client Battery Dashboard</h1>
             <p>
               Live telemetry, predictive monitoring, and system health insights
             </p>
@@ -29,6 +29,12 @@
         </div>
 
         <div class="header-actions">
+          <div class="module-switcher">
+  <label for="moduleSelect" class="role-label">Module</label>
+  <select id="moduleSelect" class="role-select">
+    <option value="all">All Modules</option>
+  </select>
+</div>
           <div class="role-switcher">
             <label for="roleSelect" class="role-label">View</label>
             <select id="roleSelect" class="role-select">
@@ -37,6 +43,7 @@
               <option value="admin">Admin</option>
             </select>
           </div>
+          
 
           <div class="system-meta">
             <div id="systemClock" class="system-clock">--:--:--</div>
@@ -48,9 +55,27 @@
       </header>
 
       <!-- =========================
+           OPERATOR SESSION
+      ========================== -->
+      <section class="section-block">
+        <div class="section-head">
+          <h2>Operator Session</h2>
+          <span class="subtle">Demo role selection for dashboard views</span>
+        </div>
+
+        <div class="hero-card">
+          <h2>Active Role</h2>
+          <div id="activeRoleDisplay" class="metric-value">Client</div>
+          <p>
+            Switch roles to preview client, technician, and admin dashboard states
+          </p>
+        </div>
+      </section>
+
+      <!-- =========================
            CONNECTIVITY STATUS
       ========================== -->
-      <section class="section-block" data-role-view="all">
+      <section class="section-block">
         <div class="section-head">
           <h2>Connectivity Status</h2>
           <span class="subtle">Firmware + cloud link indicators</span>
@@ -70,27 +95,9 @@
       </section>
 
       <!-- =========================
-           OPERATOR SESSION
-      ========================== -->
-      <section class="section-block" data-role-view="all">
-        <div class="section-head">
-          <h2>Operator Session</h2>
-          <span class="subtle">Demo role selection for dashboard views</span>
-        </div>
-
-        <div class="hero-card">
-          <h2>Active Role</h2>
-          <div id="activeRoleDisplay" class="metric-value">Client</div>
-          <p>
-            Switch roles to preview client, technician, and admin dashboard states
-          </p>
-        </div>
-      </section>
-
-      <!-- =========================
            SYSTEM OVERVIEW
       ========================== -->
-      <section class="section-block" data-role-view="all">
+      <section class="section-block">
         <div class="section-head">
           <h2>System Overview</h2>
           <span class="subtle">Live health, alerts, and operator score</span>
@@ -128,7 +135,7 @@
       <!-- =========================
            ACHIEVEMENTS
       ========================== -->
-      <section class="section-block" data-role-view="all">
+      <section class="section-block">
         <div class="section-head">
           <h2>Achievements</h2>
           <span class="subtle">Live unlocks</span>
@@ -137,23 +144,9 @@
       </section>
 
       <!-- =========================
-           SENSOR FLEET
-      ========================== -->
-      <section class="section-block" data-role-view="technician admin">
-        <div class="section-head">
-          <h2>Sensor Fleet</h2>
-          <span class="subtle">
-            Battery module sensor groups · Auto-refresh every 5 seconds
-          </span>
-        </div>
-
-        <div id="sensorGrid" class="sensor-grid"></div>
-      </section>
-
-      <!-- =========================
            VOLTAGE TREND
       ========================== -->
-      <section class="panel chart-panel" data-role-view="all">
+      <section class="panel chart-panel">
         <div class="panel-header">
           <div class="intel-row">
             <div class="intel-pill" id="forecastStatus" data-tone="neutral">
@@ -182,7 +175,7 @@
       <!-- =========================
            TEMPERATURE TREND
       ========================== -->
-      <section class="panel chart-panel" data-role-view="all">
+      <section class="panel chart-panel">
         <div class="panel-header">
           <div class="intel-row">
             <div class="intel-pill" id="tempForecastStatus" data-tone="neutral">
@@ -206,99 +199,6 @@
         <div class="assistant-line" id="tempAssistant">
           Assistant: Monitoring thermal trend...
         </div>
-      </section>
-
-      <!-- =========================
-           VOLTAGE BANK COMPARISON
-      ========================== -->
-      <section class="panel chart-panel" data-role-view="technician admin">
-        <div class="panel-header">
-          <div class="intel-row">
-            <div class="intel-pill" id="bankBalanceStatus" data-tone="neutral">
-              Balance: Healthy (Δ 0.00V)
-            </div>
-            <div class="intel-pill" id="bankLeaderStatus" data-tone="neutral">
-              Lead: Even
-            </div>
-          </div>
-
-          <h2>Voltage Bank Comparison</h2>
-          <button id="toggleBankChart" class="chart-toggle-btn">
-            ▶ Show Chart
-          </button>
-        </div>
-
-        <div id="bankChartWrap" class="chart-wrap collapsed">
-          <canvas id="bankComparisonChart"></canvas>
-        </div>
-
-        <div class="assistant-line" id="bankAssistant">
-          Assistant: Monitoring bank balance...
-        </div>
-      </section>
-
-      <!-- =========================
-           API OBSERVABILITY
-      ========================== -->
-      <section class="section-block" data-role-view="admin">
-        <div class="section-head">
-          <h2>API Observability</h2>
-          <span class="subtle">Live NestJS request observations</span>
-        </div>
-
-        <div class="hero-grid">
-          <article class="hero-card">
-            <h2>Total Requests</h2>
-            <div id="obsTotalRequests" class="metric-value">--</div>
-            <p>Tracked API calls</p>
-          </article>
-
-          <article class="hero-card">
-            <h2>Success Rate</h2>
-            <div id="obsSuccessRate" class="metric-value">--</div>
-            <p>Successful responses</p>
-          </article>
-
-          <article class="hero-card">
-            <h2>Average Latency</h2>
-            <div id="obsAvgLatency" class="metric-value">--</div>
-            <p>Mean response time</p>
-          </article>
-
-          <article class="hero-card">
-            <h2>Failed Requests</h2>
-            <div id="obsFailedRequests" class="metric-value">--</div>
-            <p>Error responses and failed calls</p>
-          </article>
-        </div>
-
-        <section class="panel chart-panel observability-panel">
-          <div class="panel-header">
-            <h2>Recent API Calls</h2>
-            <button id="refreshObservabilityBtn" class="chart-toggle-btn">
-              Refresh
-            </button>
-          </div>
-
-          <div class="table-scroll">
-            <table class="observability-table">
-              <thead>
-                <tr>
-                  <th>Time</th>
-                  <th>Method</th>
-                  <th>Path</th>
-                  <th>Status</th>
-                  <th>Duration</th>
-                </tr>
-              </thead>
-              <tbody id="observabilityTableBody">
-                <tr>
-                  <td colspan="5">No API observations yet.</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </section>
       </section>
     </div>
 

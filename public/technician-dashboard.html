@@ -23,50 +23,51 @@
         </div>
 
         <div class="header-actions">
-          <div class="role-switcher">
-            <label for="roleSelect" class="role-label">View</label>
-            <select id="roleSelect" class="role-select">
-              <option value="client">Client</option>
-              <option value="technician" selected>Technician</option>
-              <option value="admin">Admin</option>
-            </select>
-          </div>
-       
+  <div class="module-switcher">
+    <label for="moduleSelect" class="role-label">Module</label>
+    <select id="moduleSelect" class="role-select">
+      <option value="all">All Modules</option>
+    </select>
+  </div>
 
-          <div class="system-meta">
-            <div id="systemClock" class="system-clock">--:--:--</div>
-            <div id="lastUpdate" class="system-update">Last Update: --</div>
-          </div>
+  <div class="role-switcher">
+    <label for="roleSelect" class="role-label">View</label>
+    <select id="roleSelect" class="role-select">
+      <option value="client">Client</option>
+      <option value="technician" selected>Technician</option>
+      <option value="admin">Admin</option>
+    </select>
+  </div>
 
-          <button id="themeToggle" class="theme-toggle-btn">🌙 Dark</button>
-        </div>
+  <div class="system-meta">
+    <div id="systemClock" class="system-clock">--:--:--</div>
+    <div id="lastUpdate" class="system-update">Last Update: --</div>
+  </div>
+
+  <button id="themeToggle" class="theme-toggle-btn">🌙 Dark</button>
+</div>
       </header>
+
+      <section class="section-block">
+        <div class="section-head">
+          <h2>Operator Session</h2>
+          <span class="subtle">Demo role selection for dashboard views</span>
+        </div>
+
+        <div class="hero-card">
+          <h2>Active Role</h2>
+          <div id="activeRoleDisplay" class="metric-value">Technician</div>
+          <p>Switch roles to preview client, technician, and admin dashboard states</p>
+        </div>
+      </section>
 
       <section class="section-block">
         <div class="section-head">
           <h2>Technician Session</h2>
           <span class="subtle">Field diagnostics and service visibility</span>
         </div>
-        <section class="section-block">
-  <div class="section-head">
-    <h2>Operator Session</h2>
-    <span class="subtle">Demo role selection for dashboard views</span>
-  </div>
-
-  <div class="hero-card">
-    <h2>Active Role</h2>
-    <div id="activeRoleDisplay" class="metric-value">Client</div>
-    <p>Switch roles to preview client, technician, and admin dashboard states</p>
-  </div>
-</section>
 
         <div class="hero-grid">
-          <article class="hero-card">
-            <h2>Active Role</h2>
-            <div class="metric-value">Technician</div>
-            <p>Operational maintenance dashboard</p>
-          </article>
-
           <article class="hero-card">
             <h2>Modules Requiring Review</h2>
             <div id="techModulesReview" class="metric-value">--</div>
@@ -83,6 +84,12 @@
             <h2>Last Field Sync</h2>
             <div id="techFieldSync" class="metric-value">--</div>
             <p>Latest device and technician sync</p>
+          </article>
+
+          <article class="hero-card">
+            <h2>Offline Units</h2>
+            <div id="offlineUnits" class="metric-value">--</div>
+            <p>Units requiring communication checks</p>
           </article>
         </div>
       </section>
@@ -132,9 +139,9 @@
           </article>
 
           <article class="hero-card">
-            <h2>Offline Units</h2>
-            <div id="offlineUnits" class="metric-value">--</div>
-            <p>Units requiring communication checks</p>
+            <h2>Priority Escalations</h2>
+            <div id="priorityEscalations" class="metric-value">--</div>
+            <p>Items requiring fast technician follow-up</p>
           </article>
         </div>
       </section>
