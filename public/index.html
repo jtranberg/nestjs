@@ -30,11 +30,11 @@
 
         <div class="header-actions">
           <div class="module-switcher">
-  <label for="moduleSelect" class="role-label">Module</label>
-  <select id="moduleSelect" class="role-select">
-    <option value="all">All Modules</option>
-  </select>
-</div>
+            <label for="moduleSelect" class="role-label">Module</label>
+            <select id="moduleSelect" class="role-select">
+              <option value="all">All Modules</option>
+            </select>
+          </div>
           <div class="role-switcher">
             <label for="roleSelect" class="role-label">View</label>
             <select id="roleSelect" class="role-select">
@@ -43,7 +43,6 @@
               <option value="admin">Admin</option>
             </select>
           </div>
-          
 
           <div class="system-meta">
             <div id="systemClock" class="system-clock">--:--:--</div>
@@ -53,6 +52,21 @@
           <button id="themeToggle" class="theme-toggle-btn">🌙 Dark</button>
         </div>
       </header>
+     <section id="demoIntroAlert" class="demo-alert">
+  <div class="demo-alert-content">
+    <div id="demoAlertMessage" class="demo-alert-text">
+      <!-- Injected dynamically based on role -->
+    </div>
+
+    <button
+      id="dismissDemoAlert"
+      class="demo-alert-close"
+      aria-label="Dismiss alert"
+    >
+      ✕
+    </button>
+  </div>
+</section>
 
       <!-- =========================
            OPERATOR SESSION
@@ -67,7 +81,8 @@
           <h2>Active Role</h2>
           <div id="activeRoleDisplay" class="metric-value">Client</div>
           <p>
-            Switch roles to preview client, technician, and admin dashboard states
+            Switch roles to preview client, technician, and admin dashboard
+            states
           </p>
         </div>
       </section>
@@ -181,7 +196,11 @@
             <div class="intel-pill" id="tempForecastStatus" data-tone="neutral">
               Thermal Forecast: Stable (+0.00°C)
             </div>
-            <div class="intel-pill" id="tempDeviationStatus" data-tone="neutral">
+            <div
+              class="intel-pill"
+              id="tempDeviationStatus"
+              data-tone="neutral"
+            >
               Thermal Risk: Normal (+0.00°C)
             </div>
           </div>

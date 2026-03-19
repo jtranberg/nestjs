@@ -20,6 +20,34 @@ const ROLE_ROUTES = {
 };
 
 /* =========================
+   DEMO ALERT
+========================= */
+function initDemoAlert() {
+  const alertEl = document.getElementById("demoIntroAlert");
+  const dismissBtn = document.getElementById("dismissDemoAlert");
+  const messageEl = document.getElementById("demoAlertMessage");
+
+  if (!alertEl || !dismissBtn || !messageEl) return;
+
+  const role = getRoleFromPath();
+
+  const messages = {
+    client:
+      "<strong>Client View:</strong> This dashboard presents high-level battery telemetry, health trends, alerts, module selection, and system mood feedback for a simplified operational experience.",
+    technician:
+      "<strong>Technician View:</strong> This dashboard adds module diagnostics, maintenance-focused metrics, sensor fleet visibility, and bank comparison for field operations.",
+    admin:
+      "<strong>Admin View:</strong> This dashboard includes platform observability, system oversight, role-based architecture, and broader operational visibility.",
+  };
+
+  messageEl.innerHTML = messages[role] || messages.client;
+
+  dismissBtn.addEventListener("click", () => {
+    alertEl.classList.add("hidden");
+  });
+}
+
+/* =========================
    ROLE VIEW
 ========================= */
 function formatRoleLabel(role = DEFAULT_ROLE) {
@@ -111,7 +139,9 @@ function populateModuleSelect(modules = []) {
 
   const availableIds = [
     "all",
-    ...modules.map((module, index) => module.id || module.moduleId || `module-${index + 1}`),
+    ...modules.map(
+      (module, index) => module.id || module.moduleId || `module-${index + 1}`
+    ),
   ];
 
   select.value = availableIds.includes(current) ? current : "all";
@@ -123,8 +153,7 @@ function initModuleSwitcher() {
 
   select.addEventListener("change", (event) => {
     const target = event.target;
-    const value =
-      target && "value" in target ? target.value : "all";
+    const value = target && "value" in target ? target.value : "all";
 
     setCurrentModule(value);
     loadDashboard();
@@ -541,6 +570,7 @@ document.addEventListener("DOMContentLoaded", () => {
   startSystemClock();
   initRoleSwitcher();
   initModuleSwitcher();
+  initDemoAlert();
 
   themeManager = new ThemeManager({
     buttonId: "themeToggle",

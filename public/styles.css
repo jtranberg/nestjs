@@ -24,7 +24,126 @@ body.light-theme {
   --border: rgba(24, 32, 51, 0.08);
 }
 
-.role-switcher {
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background:
+    radial-gradient(circle at top right, rgba(85, 168, 255, 0.18), transparent 25%),
+    linear-gradient(180deg, #0a0f1d, #0b1020);
+  color: var(--text);
+  transition: background 0.8s ease, color 0.25s ease;
+}
+
+body.light-theme {
+  background:
+    radial-gradient(circle at top right, rgba(47, 125, 225, 0.1), transparent 25%),
+    linear-gradient(180deg, #f4f7fc, #eaf0f8);
+}
+
+.app-shell {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 18px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.topbar-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  flex: 1 1 420px;
+  min-width: 280px;
+}
+
+.brand-logo {
+  width: auto;
+  height: 42px;
+  object-fit: contain;
+  flex-shrink: 0;
+  margin-right: 0;
+}
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+}
+
+.brand-text h1 {
+  margin: 0 0 6px;
+  font-size: 1.9rem;
+  line-height: 1.15;
+}
+
+.topbar .brand-text p {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.4;
+  color: #abc6e4;
+  font-weight: 700;
+}
+
+body.light-theme .topbar .brand-text p {
+  color: #08202b;
+}
+@media (max-width: 640px) {
+  .topbar-brand {
+    align-items: center;
+    text-align: center;
+  }
+}
+@media (max-width: 900px) {
+  .topbar {
+    flex-direction: column;
+    align-items: stretch;
+     margin-bottom: 10px; /* reduce from 24px */
+    gap: 12px; /* tighten spacing */
+  }
+    .demo-alert {
+   margin: 0 0 16px;
+  }
+  
+
+  .topbar-brand,
+  .header-actions {
+    flex: none;        /* 🔥 key fix */
+    width: 100%;
+  }
+}
+
+.header-actions {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+  flex: 1 1 420px;
+}
+
+.role-switcher,
+.module-switcher {
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -48,136 +167,40 @@ body.light-theme {
   outline: none;
 }
 
+body.light-theme .role-select {
+  background: rgba(255, 255, 255, 0.9);
+  color: #1e293b;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
 
-/* =========================
-   BRAND
-========================= */
-
-.topbar-brand {
+.system-meta {
   display: flex;
-  align-items: center;
-  gap: 14px;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  min-width: 120px;
+  margin-right: 0;
 }
 
-.brand-logo {
-   height: 36px;
-  margin-right: 10px; 
-  width: auto;
-  object-fit: contain;
+.system-clock {
+  font-family: monospace;
+  font-size: 13px;
+  letter-spacing: 1px;
+  color: #eef3ff;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.08);
 }
 
-.brand-text h1 {
-  margin: 0;
-  font-size: 20px;
+body.light-theme .system-clock {
+  color: #010c18;
+  background: rgba(192, 222, 247, 0.781);
 }
 
-.topbar .brand-text p {
-  font-size: 1rem;
-  color: #abc6e4;
-  font-weight: 700;
+.system-update {
+  font-size: 11px;
+  opacity: 0.7;
 }
-
-
-
-/* =========================
-   LIGHT MODE SENSOR COLORS
-========================= */
-
-body.light-theme .temp-good,
-body.light-theme .voltage-good {
-  color: #0f8a4b;
-  font-weight: 700;
-}
-
-body.light-theme .temp-warn,
-body.light-theme .voltage-warn {
-  color: #b37400;
-  font-weight: 700;
-}
-
-body.light-theme .temp-bad,
-body.light-theme .voltage-bad {
-  color: #c62839;
-  font-weight: 700;
-}
-.header-actions {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-  background:
-    radial-gradient(circle at top right, rgba(85, 168, 255, 0.18), transparent 25%),
-    linear-gradient(180deg, #0a0f1d, #0b1020);
-  color: var(--text);
-  transition: background 0.8s ease, color 0.25s ease;
-}
-
-body.light-theme {
-  background:
-    radial-gradient(circle at top right, rgba(47, 125, 225, 0.10), transparent 25%),
-    linear-gradient(180deg, #f4f7fc, #eaf0f8);
-}
-
-/* =========================
-   LIGHT MODE ACHIEVEMENTS
-========================= */
-
-body.light-theme .badge {
-  font-weight: 700;
-  border: 1px solid transparent;
-}
-
-/* GOOD (green achievements) */
-body.light-theme .badge.good {
-  background: #e6f6ec;
-  color: #0f8a4b;
-  border-color: #bfe7cc;
-}
-
-/* WARNING (amber achievements) */
-body.light-theme .badge.warn {
-  background: #fff3d6;
-  color: #b37400;
-  border-color: #f2d19a;
-}
-
-/* BAD / ALERT (red achievements) */
-body.light-theme .badge.bad {
-  background: #fde7e9;
-  color: #c62839;
-  border-color: #f2b7be;
-}
-
-/* =========================
-   LIGHT MODE ACHIEVEMENTS
-========================= */
-/* =========================
-   CHART BUTTON FIX - LIGHT MODE
-========================= */
-
-body.light-theme .chart-toggle,
-body.light-theme .chart-btn {
-  color: rgba(20, 28, 45, 0.92); /* darker readable text */
-  background: rgba(255, 255, 255, 0.75);
-  border: 1px solid rgba(0, 0, 0, 0.12);
-}
-
-/* hover state */
-body.light-theme .chart-toggle:hover,
-body.light-theme .chart-btn:hover {
-  background: rgba(255, 255, 255, 0.95);
-  color: rgba(10, 18, 35, 1);
-}
-
-
 
 .theme-toggle-btn {
   padding: 10px 14px;
@@ -199,43 +222,86 @@ body.light-theme .theme-toggle-btn {
   background: rgba(24, 32, 51, 0.04);
 }
 
-.app-shell {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 24px;
+/* =========================
+   ALERT BANNER
+========================= */
+
+.demo-alert {
+  margin-bottom: 20px;
+  border: 1px solid var(--border);
+  border-left: 4px solid #4da3ff;
+  border-radius: 18px;
+  background: linear-gradient(
+    180deg,
+    rgba(85, 168, 255, 0.14),
+    rgba(85, 168, 255, 0.06)
+  );
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+  overflow: hidden;
 }
 
-.topbar {
+.role-technician .demo-alert {
+  border-left-color: #f5a623;
+}
+
+.role-admin .demo-alert {
+  border-left-color: #9b59ff;
+}
+
+.demo-alert-content {
   display: flex;
+  align-items: flex-start;
   justify-content: space-between;
-  align-items: center;
   gap: 16px;
-  margin-bottom: 24px;
+  padding: 16px 18px;
 }
 
-.topbar h1 {
-  margin: 0 0 6px;
-  font-size: 2rem;
+.demo-alert-text {
+  color: var(--text);
+  line-height: 1.5;
+  font-size: 0.95rem;
 }
 
-.topbar p {
-  margin: 0;
-  color: var(--muted);
+.demo-alert-text strong {
+  display: inline-block;
+  margin-right: 6px;
 }
 
-.topbar-pill {
-  padding: 10px 16px;
-  border-radius: 999px;
-  background: rgba(85, 168, 255, 0.12);
-  border: 1px solid rgba(85, 168, 255, 0.25);
-  color: #cfe5ff;
+.demo-alert-close {
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text);
+  border-radius: 10px;
+  padding: 8px 10px;
+  cursor: pointer;
+  font-weight: 700;
+  line-height: 1;
 }
-.module-switcher {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  min-width: 140px;
+
+.demo-alert-close:hover {
+  transform: translateY(-1px);
 }
+
+body.light-theme .demo-alert {
+  background: linear-gradient(
+    180deg,
+    rgba(47, 125, 225, 0.12),
+    rgba(47, 125, 225, 0.05)
+  );
+}
+
+body.light-theme .demo-alert-close {
+  background: rgba(0, 0, 0, 0.04);
+  color: #1e293b;
+}
+
+.demo-alert.hidden {
+  display: none;
+}
+
+/* =========================
+   CARDS / LAYOUT
+========================= */
 
 .hero-grid {
   display: grid;
@@ -302,6 +368,10 @@ body.light-theme .theme-toggle-btn {
   color: var(--muted);
 }
 
+/* =========================
+   BADGES
+========================= */
+
 .badges {
   display: flex;
   flex-wrap: wrap;
@@ -331,6 +401,89 @@ body.light-theme .theme-toggle-btn {
   color: #ffd5db;
   background: rgba(255, 92, 108, 0.12);
 }
+
+body.light-theme .badge {
+  font-weight: 700;
+  border: 1px solid transparent;
+}
+
+body.light-theme .badge.good {
+  background: #e6f6ec;
+  color: #0f8a4b;
+  border-color: #bfe7cc;
+}
+
+body.light-theme .badge.warn {
+  background: #fff3d6;
+  color: #b37400;
+  border-color: #f2d19a;
+}
+
+body.light-theme .badge.bad {
+  background: #fde7e9;
+  color: #c62839;
+  border-color: #f2b7be;
+}
+
+/* =========================
+   CONNECTIONS
+========================= */
+
+.connection-strip {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.connection-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+.indicator-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  display: inline-block;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.18);
+}
+
+.indicator-online {
+  background: var(--good);
+  box-shadow: 0 0 12px rgba(43, 214, 123, 0.65);
+}
+
+.indicator-degraded {
+  background: var(--warn);
+  box-shadow: 0 0 12px rgba(255, 176, 32, 0.65);
+}
+
+.indicator-offline {
+  background: var(--bad);
+  box-shadow: 0 0 12px rgba(255, 92, 108, 0.65);
+}
+
+.indicator-ready {
+  background: #4dd8ff;
+  box-shadow: 0 0 12px rgba(77, 216, 255, 0.7);
+}
+
+.indicator-pairing {
+  background: #b388ff;
+  box-shadow: 0 0 12px rgba(179, 136, 255, 0.7);
+}
+
+/* =========================
+   SENSOR CARDS
+========================= */
 
 .sensor-grid {
   display: grid;
@@ -388,25 +541,6 @@ body.light-theme .theme-toggle-btn {
   gap: 12px;
 }
 
-@media (max-width: 700px) {
-  .topbar,
-  .sensor-top,
-  .panel-header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .sensor-stats {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-@media (max-width: 480px) {
-  .sensor-stats {
-    grid-template-columns: 1fr;
-  }
-}
-
 .stat-box {
   padding: 14px;
   border-radius: 14px;
@@ -430,64 +564,10 @@ body.light-theme .theme-toggle-btn {
   font-size: 0.85rem;
 }
 
-@media (max-width: 1000px) {
-  .hero-grid,
-  .sensor-grid {
-    grid-template-columns: 1fr;
-  }
-}
+/* =========================
+   MODULE DETAIL VIEW
+========================= */
 
-.connection-strip {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin-bottom: 20px;
-}
-
-.connection-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 14px;
-  border-radius: 999px;
-  font-weight: 700;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid var(--border);
-  color: var(--text);
-}
-
-.indicator-dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 999px;
-  display: inline-block;
-  box-shadow: 0 0 12px rgba(255, 255, 255, 0.18);
-}
-
-.indicator-online {
-  background: var(--good);
-  box-shadow: 0 0 12px rgba(43, 214, 123, 0.65);
-}
-
-.indicator-degraded {
-  background: var(--warn);
-  box-shadow: 0 0 12px rgba(255, 176, 32, 0.65);
-}
-
-.indicator-offline {
-  background: var(--bad);
-  box-shadow: 0 0 12px rgba(255, 92, 108, 0.65);
-}
-
-.indicator-ready {
-  background: #4dd8ff;
-  box-shadow: 0 0 12px rgba(77, 216, 255, 0.7);
-}
-
-.indicator-pairing {
-  background: #b388ff;
-  box-shadow: 0 0 12px rgba(179, 136, 255, 0.7);
-}
 .module-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -593,6 +673,24 @@ body.light-theme .theme-toggle-btn {
   color: #ffd5db;
 }
 
+body.light-theme .temp-good,
+body.light-theme .voltage-good {
+  color: #0f8a4b;
+  font-weight: 700;
+}
+
+body.light-theme .temp-warn,
+body.light-theme .voltage-warn {
+  color: #b37400;
+  font-weight: 700;
+}
+
+body.light-theme .temp-bad,
+body.light-theme .voltage-bad {
+  color: #c62839;
+  font-weight: 700;
+}
+
 .mini-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -622,17 +720,15 @@ body.light-theme .theme-toggle-btn {
   font-size: 0.88rem;
 }
 
-@media (max-width: 1100px) {
-  .module-panels {
-    grid-template-columns: 1fr;
-  }
-}
-
 .total-voltage-highlight {
   margin-top: 14px;
   padding: 18px;
   border-radius: 18px;
-  background: linear-gradient(135deg, rgba(85, 168, 255, 0.16), rgba(43, 214, 123, 0.12));
+  background: linear-gradient(
+    135deg,
+    rgba(85, 168, 255, 0.16),
+    rgba(43, 214, 123, 0.12)
+  );
   border: 1px solid rgba(85, 168, 255, 0.28);
   box-shadow:
     0 0 0 1px rgba(85, 168, 255, 0.08),
@@ -649,35 +745,6 @@ body.light-theme .theme-toggle-btn {
   font-weight: 700;
 }
 
-
-
-/* =========================
-   TOTAL VOLTAGE VISIBILITY
-========================= */
-/* =========================
-   VOLTAGE CHART BUTTON FIX
-========================= */
-
-#toggleVoltageChart {
-  transition: color 0.25s ease, background 0.25s ease, border 0.25s ease;
-}
-
-/* Light theme override */
-button[id^="toggle"] {
-  transition: color 0.25s ease, background 0.25s ease, border 0.25s ease;
-}
-
-body.light-theme button[id^="toggle"] {
-  color: rgba(20, 28, 45, 0.95);
-  background: rgba(255, 255, 255, 0.85);
-  border: 1px solid rgba(0, 0, 0, 0.12);
-}
-
-body.light-theme button[id^="toggle"]:hover {
-  background: rgba(255, 255, 255, 1);
-  color: rgba(10, 18, 35, 1);
-}
-
 .total-voltage-value {
   color: #dff3ff;
   font-weight: 800;
@@ -689,8 +756,74 @@ body.light-theme .total-voltage-value {
   color: #0b3d91;
   text-shadow: none;
 }
+
+/* =========================
+   CHARTS
+========================= */
+
+button[id^="toggle"] {
+  transition: color 0.25s ease, background 0.25s ease, border 0.25s ease;
+}
+
 .chart-panel {
-  margin-top: 20px;
+  position: relative;
+  overflow: hidden;
+  margin: 0 24px 24px;
+  padding: 20px;
+  border-radius: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: linear-gradient(180deg, rgba(20, 28, 40, 0.96), rgba(8, 12, 20, 0.98));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    inset 0 -12px 24px rgba(0, 0, 0, 0.24),
+    0 18px 40px rgba(0, 0, 0, 0.34);
+  transform: perspective(1200px) rotateX(1.2deg);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.chart-panel::after {
+  content: "";
+  position: absolute;
+  inset: auto 12% -40% 12%;
+  height: 70%;
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(125, 211, 252, 0.1), transparent 70%);
+  filter: blur(30px);
+  opacity: 0.8;
+}
+
+.chart-panel:hover {
+  transform: perspective(1200px) rotateX(0deg) translateY(-2px);
+  border-color: rgba(125, 211, 252, 0.22);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 -12px 24px rgba(0, 0, 0, 0.22),
+    0 24px 48px rgba(0, 0, 0, 0.42);
+}
+
+body.light-theme .chart-panel {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(233, 240, 248, 0.96));
+  border: 1px solid rgba(30, 41, 59, 0.1);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 -10px 22px rgba(148, 163, 184, 0.12),
+    0 18px 36px rgba(15, 23, 42, 0.12);
+}
+
+body.light-theme .chart-panel::before {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(255, 255, 255, 0.06) 18%,
+    rgba(255, 255, 255, 0) 42%
+  );
+}
+
+body.light-theme .chart-panel::after {
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.08), transparent 70%);
 }
 
 .panel-header {
@@ -717,50 +850,15 @@ body.light-theme .total-voltage-value {
   background: rgba(255, 255, 255, 0.14);
 }
 
-.chart-wrap {
-  overflow: hidden;
-  max-height: 420px;
-  opacity: 1;
-  margin-top: 16px;
-  transition: max-height 0.35s ease, opacity 0.25s ease, margin-top 0.25s ease;
-}
-
-.chart-wrap.collapsed {
-  max-height: 0;
-  opacity: 0;
-  margin-top: 0;
-}
-
-#voltageTrendChart,
-#tempTrendChart,
-#bankComparisonChart {
-  width: 100%;
-  height: 320px !important;
-}
-
-/* Light theme support */
 body.light-theme .chart-toggle-btn {
-  background: rgba(0, 0, 0, 0.05);
-  color: #1e293b;
+  color: rgba(20, 28, 45, 0.95);
+  background: rgba(255, 255, 255, 0.85);
   border: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 body.light-theme .chart-toggle-btn:hover {
-  background: rgba(0, 0, 0, 0.08);
-}
-
-
-/* =========================
-   CHART PANEL BACKGROUND
-========================= */
-
-.chart-panel {
-  background: linear-gradient(180deg, var(--panel), var(--panel-2));
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.24);
-  padding: 20px;
-  margin: 0 24px 24px;
+  background: rgba(255, 255, 255, 1);
+  color: rgba(10, 18, 35, 1);
 }
 
 .chart-wrap {
@@ -768,16 +866,17 @@ body.light-theme .chart-toggle-btn:hover {
   max-height: 420px;
   opacity: 1;
   margin-top: 16px;
-  transition: max-height 0.35s ease, opacity 0.25s ease, margin-top 0.25s ease;
-
-  background: rgba(10, 16, 30, 0.96);   /* darker */
+  padding: 16px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 16px;
-  padding: 16px;
-
+  background: rgba(10, 16, 30, 0.96);
   box-shadow:
     inset 0 0 18px rgba(0, 0, 0, 0.35),
     0 0 20px rgba(85, 168, 255, 0.05);
+  transition:
+    max-height 0.35s ease,
+    opacity 0.25s ease,
+    margin-top 0.25s ease;
 }
 
 .chart-wrap.collapsed {
@@ -804,119 +903,11 @@ body.light-theme .chart-wrap {
   height: 320px !important;
 }
 
-.chart-container.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-body.light-theme .chart-container {
-  background: rgba(255, 255, 255, 0.973);
-  border: 1px solid rgba(0,0,0,0.08);
-}
-
-.light-theme .topbar .brand-text p {
-  font-size: 1rem;
-  color: #08202b;
-  font-weight: 700;
-}
-
-.system-clock {
-  font-family: monospace;
-  font-size: 13px;
-  letter-spacing: 1px;
-  color: #010c18;
-  padding: 6px 10px;
-  border-radius: 8px;
-  background: rgba(192, 222, 247, 0.781);
-}
-.system-update {
-  font-size: 11px;
-  opacity: 0.7;
-}
-.system-meta {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  margin-right: 10px;
-}
-
-//chart 3d
-.chart-panel {
-  position: relative;
-  overflow: hidden;
-  background: linear-gradient(180deg, rgba(20, 28, 40, 0.96), rgba(8, 12, 20, 0.98));
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 22px;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.08),
-    inset 0 -12px 24px rgba(0, 0, 0, 0.24),
-    0 18px 40px rgba(0, 0, 0, 0.34);
-  transform: perspective(1200px) rotateX(1.2deg);
-  transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease,
-    border-color 0.25s ease;
-}
-
-/* .chart-panel::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.10) 0%,
-    rgba(255, 255, 255, 0.03) 16%,
-    rgba(255, 255, 255, 0.00) 42%
-  );
-} */
-
-.chart-panel::after {
-  content: "";
-  position: absolute;
-  inset: auto 12% -40% 12%;
-  height: 70%;
-  pointer-events: none;
-  background: radial-gradient(circle, rgba(125, 211, 252, 0.10), transparent 70%);
-  filter: blur(30px);
-  opacity: 0.8;
-}
-
-.chart-panel:hover {
-  transform: perspective(1200px) rotateX(0deg) translateY(-2px);
-  border-color: rgba(125, 211, 252, 0.22);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.10),
-    inset 0 -12px 24px rgba(0, 0, 0, 0.22),
-    0 24px 48px rgba(0, 0, 0, 0.42);
-}
-
-.light-theme .chart-panel {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(233, 240, 248, 0.96));
-  border: 1px solid rgba(30, 41, 59, 0.10);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.90),
-    inset 0 -10px 22px rgba(148, 163, 184, 0.12),
-    0 18px 36px rgba(15, 23, 42, 0.12);
-}
-
-.light-theme .chart-panel::before {
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.76) 0%,
-    rgba(255, 255, 255, 0.22) 18%,
-    rgba(255, 255, 255, 0.00) 42%
-  );
-}
-
-.light-theme .chart-panel::after {
-  background: radial-gradient(circle, rgba(37, 99, 235, 0.08), transparent 70%);
-}
-
 .chart-wrap canvas {
   position: relative;
   z-index: 2;
 }
+
 .intel-row {
   display: flex;
   gap: 10px;
@@ -934,8 +925,8 @@ body.light-theme .chart-container {
   background: rgba(255, 255, 255, 0.04);
   color: #e2e8f0;
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.08),
-    0 8px 18px rgba(0,0,0,0.18);
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 8px 18px rgba(0, 0, 0, 0.18);
 }
 
 .intel-pill[data-tone="good"] {
@@ -947,7 +938,7 @@ body.light-theme .chart-container {
 .intel-pill[data-tone="neutral"] {
   color: #dbeafe;
   border-color: rgba(96, 165, 250, 0.24);
-  background: rgba(96, 165, 250, 0.10);
+  background: rgba(96, 165, 250, 0.1);
 }
 
 .intel-pill[data-tone="warn"] {
@@ -958,37 +949,37 @@ body.light-theme .chart-container {
 
 .intel-pill[data-tone="danger"] {
   color: #fecaca;
-  border-color: rgba(239, 68, 68, 0.30);
+  border-color: rgba(239, 68, 68, 0.3);
   background: rgba(239, 68, 68, 0.12);
 }
 
-.light-theme .intel-pill {
+body.light-theme .intel-pill {
   color: #1e293b;
-  background: rgba(255,255,255,0.72);
-  border-color: rgba(30, 41, 59, 0.10);
+  background: rgba(255, 255, 255, 0.72);
+  border-color: rgba(30, 41, 59, 0.1);
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.85),
-    0 8px 18px rgba(15,23,42,0.08);
+    inset 0 1px 0 rgba(255, 255, 255, 0.85),
+    0 8px 18px rgba(15, 23, 42, 0.08);
 }
 
-.light-theme .intel-pill[data-tone="good"] {
+body.light-theme .intel-pill[data-tone="good"] {
   color: #166534;
-  background: rgba(34, 197, 94, 0.10);
+  background: rgba(34, 197, 94, 0.1);
 }
 
-.light-theme .intel-pill[data-tone="neutral"] {
+body.light-theme .intel-pill[data-tone="neutral"] {
   color: #1d4ed8;
-  background: rgba(59, 130, 246, 0.10);
+  background: rgba(59, 130, 246, 0.1);
 }
 
-.light-theme .intel-pill[data-tone="warn"] {
+body.light-theme .intel-pill[data-tone="warn"] {
   color: #b45309;
   background: rgba(245, 158, 11, 0.12);
 }
 
-.light-theme .intel-pill[data-tone="danger"] {
+body.light-theme .intel-pill[data-tone="danger"] {
   color: #b91c1c;
-  background: rgba(239, 68, 68, 0.10);
+  background: rgba(239, 68, 68, 0.1);
 }
 
 .assistant-line {
@@ -997,14 +988,13 @@ body.light-theme .chart-container {
   opacity: 0.85;
   padding: 8px 12px;
   border-radius: 8px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   font-weight: 500;
 }
 
-
 /* =========================
-   API OBSERVABILITY
+   OBSERVABILITY
 ========================= */
 
 .observability-panel {
@@ -1060,7 +1050,6 @@ body.light-theme .chart-container {
   opacity: 0.72;
 }
 
-/* Optional small polish so observability cards match better */
 .observability-panel .panel-header h2 {
   margin-bottom: 0;
 }
@@ -1076,8 +1065,107 @@ body.light-theme .chart-container {
   border-radius: 14px;
 }
 
-.observability-table {
-  width: 100%;
-  border-collapse: collapse;
-  min-width: 720px;
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 1100px) {
+  .module-panels {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 1000px) {
+  .hero-grid,
+  .sensor-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .topbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .topbar-brand {
+    width: 100%;
+  }
+
+  .header-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .system-meta {
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 700px) {
+  .sensor-top,
+  .panel-header,
+  .section-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .sensor-stats {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .demo-alert-content {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+@media (max-width: 640px) {
+  .topbar-brand {
+    align-items: center;
+  }
+
+  .brand-logo {
+    height: 36px;
+  }
+
+  .brand-text h1 {
+    font-size: 1.45rem;
+  }
+
+  .topbar .brand-text p {
+    font-size: 0.92rem;
+  }
+
+  .header-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .role-switcher,
+  .module-switcher {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .role-select,
+  .theme-toggle-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .sensor-stats,
+  .mini-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .app-shell {
+    padding: 16px;
+  }
+
+  .chart-panel {
+    margin-left: 0;
+    margin-right: 0;
+  }
 }
