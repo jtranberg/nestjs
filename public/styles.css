@@ -64,7 +64,7 @@ body.light-theme {
   justify-content: space-between;
   align-items: flex-start;
   gap: 18px;
-  margin-bottom: 24px;
+  margin-bottom: 0px;
   flex-wrap: wrap;
 }
 
@@ -109,23 +109,72 @@ body.light-theme .topbar .brand-text p {
   color: #08202b;
 }
 @media (max-width: 640px) {
+  .header-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    margin-top: 4px;
+
+    flex: none;       /* critical */
+    width: 100%;
+    min-width: 0;
+  }
+
   .topbar-brand {
+    flex: none;       /* also important */
+    width: 100%;
+    min-width: 0;
+  }
+
+  .module-switcher,
+  .role-switcher {
+    min-width: 0;     /* prevents reserved width/height weirdness */
+    width: 100%;
+    gap: 2px;
+  }
+
+  .role-label {
+    font-size: 0.65rem;
+    margin-bottom: 2px;
+  }
+
+  .role-select {
+    width: 100%;
+    padding: 6px 8px;
+    font-size: 0.85rem;
+  }
+
+  .system-meta {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    text-align: center;
+    margin-top: 2px;
+    min-width: 0;
+  }
+
+  .theme-toggle-btn {
+    grid-column: 1 / -1;
+    width: 100%;
+    padding: 6px 10px;
+    font-size: 0.85rem;
   }
 }
+
+
 @media (max-width: 900px) {
   .topbar {
     flex-direction: column;
     align-items: stretch;
-     margin-bottom: 10px; /* reduce from 24px */
+     margin-bottom: 0px; /* reduce from 24px */
     gap: 12px; /* tighten spacing */
   }
     .demo-alert {
-   margin: 0 0 16px;
+     
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
   }
-  
-
+ 
   .topbar-brand,
   .header-actions {
     flex: none;        /* 🔥 key fix */
@@ -139,7 +188,7 @@ body.light-theme .topbar .brand-text p {
   justify-content: flex-end;
   gap: 10px;
   flex-wrap: wrap;
-  flex: 1 1 420px;
+  flex: 1 1 270px;
 }
 
 .role-switcher,
