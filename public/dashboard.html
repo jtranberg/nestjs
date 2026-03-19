@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>API Observability Dashboard</title>
+    <link rel="stylesheet" href="./dashboard.css" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="header">
+        <h1>API Observability Dashboard</h1>
+        <p>Live NestJS request observations</p>
+      </header>
+
+      <div class="controls">
+        <button id="refreshBtn">Refresh</button>
+        <button id="clearBtn">Clear</button>
+      </div>
+
+      <section class="stats-grid">
+        <div class="card">
+          <div class="label">Total Requests</div>
+          <div class="value" id="totalRequests">0</div>
+        </div>
+
+        <div class="card">
+          <div class="label">Success Rate</div>
+          <div class="value" id="successRate">0%</div>
+        </div>
+
+        <div class="card">
+          <div class="label">Average Latency</div>
+          <div class="value" id="avgLatency">0 ms</div>
+        </div>
+
+        <div class="card">
+          <div class="label">Failed Requests</div>
+          <div class="value" id="failedRequests">0</div>
+        </div>
+      </section>
+
+      <section class="table-card">
+        <h2>Recent API Calls</h2>
+
+        <div class="table-wrap">
+          <table class="observability-table">
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Method</th>
+                <th>Path</th>
+                <th>Status</th>
+                <th>Duration</th>
+              </tr>
+            </thead>
+            <tbody id="eventsTableBody">
+              <tr>
+                <td colspan="5">No data yet.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <script src="./dashboard.js"></script>
+  </body>
+</html>

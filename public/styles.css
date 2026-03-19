@@ -23,6 +23,30 @@ body.light-theme {
   --accent: #2f7de1;
   --border: rgba(24, 32, 51, 0.08);
 }
+//roles
+.role-switcher {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 140px;
+}
+
+.role-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.75;
+}
+
+.role-select {
+  background: rgba(255, 255, 255, 0.08);
+  color: #1a76df;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 0.95rem;
+  outline: none;
+}
 
 //logo
 /* =========================
@@ -972,4 +996,84 @@ body.light-theme .chart-container {
   background: rgba(255,255,255,0.04);
   border: 1px solid rgba(255,255,255,0.08);
   font-weight: 500;
+}
+
+
+/* =========================
+   API OBSERVABILITY
+========================= */
+
+.observability-panel {
+  margin-top: 24px;
+}
+
+.table-scroll {
+  overflow-x: auto;
+}
+
+.observability-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 720px;
+}
+
+.observability-table th,
+.observability-table td {
+  text-align: left;
+  padding: 12px 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.observability-table th {
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  opacity: 0.75;
+}
+
+.observability-table td {
+  font-size: 0.95rem;
+  vertical-align: middle;
+}
+
+.obs-status-ok {
+  color: #7dffa1;
+  font-weight: 700;
+}
+
+.obs-status-fail {
+  color: #ff8b8b;
+  font-weight: 700;
+}
+
+.obs-path {
+  max-width: 320px;
+  word-break: break-word;
+  opacity: 0.92;
+}
+
+.obs-empty {
+  opacity: 0.72;
+}
+
+/* Optional small polish so observability cards match better */
+.observability-panel .panel-header h2 {
+  margin-bottom: 0;
+}
+
+.observability-panel .chart-toggle-btn {
+  min-width: 96px;
+}
+
+.observability-table-wrap {
+  max-height: 320px;
+  overflow-y: auto;
+  overflow-x: auto;
+  border-radius: 14px;
+}
+
+.observability-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 720px;
 }

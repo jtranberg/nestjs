@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Moment Energy | Battery Ops Dashboard</title>
+    <title>Moment Energy | Admin Dashboard</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/favicon.svg" />
     <meta name="theme-color" content="#0b1020" />
@@ -13,18 +13,12 @@
 
   <body>
     <div class="app-shell">
-      <!-- =========================
-           HEADER
-      ========================== -->
       <header class="topbar">
         <div class="topbar-brand">
           <img src="/moment.png" alt="Moment Energy" class="brand-logo" />
-
           <div class="brand-text">
-            <h1>Battery Intelligence Console</h1>
-            <p>
-              Live telemetry, predictive monitoring, and system health insights
-            </p>
+            <h1>Admin Control Dashboard</h1>
+            <p>Fleet oversight, platform health, observability, and role management</p>
           </div>
         </div>
 
@@ -32,9 +26,9 @@
           <div class="role-switcher">
             <label for="roleSelect" class="role-label">View</label>
             <select id="roleSelect" class="role-select">
-              <option value="client" selected>Client</option>
+              <option value="client">Client</option>
               <option value="technician">Technician</option>
-              <option value="admin">Admin</option>
+              <option value="admin" selected>Admin</option>
             </select>
           </div>
 
@@ -47,13 +41,95 @@
         </div>
       </header>
 
-      <!-- =========================
-           CONNECTIVITY STATUS
-      ========================== -->
-      <section class="section-block" data-role-view="all">
+      <section class="section-block">
+        <div class="section-head">
+          <h2>Admin Session</h2>
+          <span class="subtle">System-wide fleet and platform controls</span>
+        </div>
+        <select id="roleSelect" class="role-select">
+  <option value="client">Client</option>
+  <option value="technician">Technician</option>
+  <option value="admin" selected>Admin</option>
+</select>
+
+        <div class="hero-grid">
+          <article class="hero-card">
+            <h2>Active Role</h2>
+            <div class="metric-value">Admin</div>
+            <p>Full operations and platform visibility</p>
+          </article>
+          <section class="section-block">
+  <div class="section-head">
+    <h2>Operator Session</h2>
+    <span class="subtle">Demo role selection for dashboard views</span>
+  </div>
+
+  <div class="hero-card">
+    <h2>Active Role</h2>
+    <div id="activeRoleDisplay" class="metric-value">Client</div>
+    <p>Switch roles to preview client, technician, and admin dashboard states</p>
+  </div>
+</section>
+
+          <article class="hero-card">
+            <h2>Total Active Units</h2>
+            <div id="adminActiveUnits" class="metric-value">--</div>
+            <p>Online fleet modules and systems</p>
+          </article>
+
+          <article class="hero-card">
+            <h2>Critical Alerts</h2>
+            <div id="adminCriticalAlerts" class="metric-value">--</div>
+            <p>Critical conditions requiring escalation</p>
+          </article>
+
+          <article class="hero-card">
+            <h2>System Availability</h2>
+            <div id="adminAvailability" class="metric-value">--</div>
+            <p>Platform uptime and service health</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section-block">
+        <div class="section-head">
+          <h2>Platform Overview</h2>
+          <span class="subtle">Fleet health, role routing, and service state</span>
+        </div>
+
+        <div class="hero-grid">
+          <article class="hero-card score-card">
+            <h2>System Health</h2>
+            <div id="scoreValue" class="score-value">--</div>
+            <div class="progress-track">
+              <div id="scoreBar" class="progress-bar"></div>
+            </div>
+          </article>
+
+          <article class="hero-card">
+            <h2>Total Alerts</h2>
+            <div id="alertsValue" class="metric-value">--</div>
+            <p>All open warning + critical conditions</p>
+          </article>
+
+          <article class="hero-card">
+            <h2>Technician Queue</h2>
+            <div id="adminTechQueue" class="metric-value">--</div>
+            <p>Open technician assignments</p>
+          </article>
+
+          <article class="hero-card">
+            <h2>Admin Actions</h2>
+            <div id="adminActionCount" class="metric-value">--</div>
+            <p>Configuration and escalation actions</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section-block">
         <div class="section-head">
           <h2>Connectivity Status</h2>
-          <span class="subtle">Firmware + cloud link indicators</span>
+          <span class="subtle">Firmware, cloud link, and communications</span>
         </div>
 
         <div class="connection-strip">
@@ -69,91 +145,24 @@
         </div>
       </section>
 
-      <!-- =========================
-           OPERATOR SESSION
-      ========================== -->
-      <section class="section-block" data-role-view="all">
+      <section class="section-block">
         <div class="section-head">
-          <h2>Operator Session</h2>
-          <span class="subtle">Demo role selection for dashboard views</span>
-        </div>
-
-        <div class="hero-card">
-          <h2>Active Role</h2>
-          <div id="activeRoleDisplay" class="metric-value">Client</div>
-          <p>
-            Switch roles to preview client, technician, and admin dashboard states
-          </p>
-        </div>
-      </section>
-
-      <!-- =========================
-           SYSTEM OVERVIEW
-      ========================== -->
-      <section class="section-block" data-role-view="all">
-        <div class="section-head">
-          <h2>System Overview</h2>
-          <span class="subtle">Live health, alerts, and operator score</span>
-        </div>
-
-        <div class="hero-grid">
-          <article class="hero-card score-card">
-            <h2>System Health</h2>
-            <div id="scoreValue" class="score-value">--</div>
-            <div class="progress-track">
-              <div id="scoreBar" class="progress-bar"></div>
-            </div>
-          </article>
-
-          <article class="hero-card">
-            <h2>Alerts</h2>
-            <div id="alertsValue" class="metric-value">--</div>
-            <p>Open warning + critical conditions</p>
-          </article>
-
-          <article class="hero-card">
-            <h2>Points</h2>
-            <div id="pointsValue" class="metric-value">0</div>
-            <p>Earn points by keeping systems green</p>
-          </article>
-
-          <article class="hero-card">
-            <h2>Streak</h2>
-            <div id="streakValue" class="metric-value">0</div>
-            <p>Consecutive refreshes with strong performance</p>
-          </article>
-        </div>
-      </section>
-
-      <!-- =========================
-           ACHIEVEMENTS
-      ========================== -->
-      <section class="section-block" data-role-view="all">
-        <div class="section-head">
-          <h2>Achievements</h2>
-          <span class="subtle">Live unlocks</span>
+          <h2>Achievements / Status Flags</h2>
+          <span class="subtle">Live fleet and platform state indicators</span>
         </div>
         <div id="badges" class="badges"></div>
       </section>
 
-      <!-- =========================
-           SENSOR FLEET
-      ========================== -->
-      <section class="section-block" data-role-view="technician admin">
+      <section class="section-block">
         <div class="section-head">
-          <h2>Sensor Fleet</h2>
-          <span class="subtle">
-            Battery module sensor groups · Auto-refresh every 5 seconds
-          </span>
+          <h2>Fleet Diagnostics</h2>
+          <span class="subtle">Full sensor and battery module visibility</span>
         </div>
 
         <div id="sensorGrid" class="sensor-grid"></div>
       </section>
 
-      <!-- =========================
-           VOLTAGE TREND
-      ========================== -->
-      <section class="panel chart-panel" data-role-view="all">
+      <section class="panel chart-panel">
         <div class="panel-header">
           <div class="intel-row">
             <div class="intel-pill" id="forecastStatus" data-tone="neutral">
@@ -179,10 +188,7 @@
         </div>
       </section>
 
-      <!-- =========================
-           TEMPERATURE TREND
-      ========================== -->
-      <section class="panel chart-panel" data-role-view="all">
+      <section class="panel chart-panel">
         <div class="panel-header">
           <div class="intel-row">
             <div class="intel-pill" id="tempForecastStatus" data-tone="neutral">
@@ -208,10 +214,7 @@
         </div>
       </section>
 
-      <!-- =========================
-           VOLTAGE BANK COMPARISON
-      ========================== -->
-      <section class="panel chart-panel" data-role-view="technician admin">
+      <section class="panel chart-panel">
         <div class="panel-header">
           <div class="intel-row">
             <div class="intel-pill" id="bankBalanceStatus" data-tone="neutral">
@@ -237,10 +240,7 @@
         </div>
       </section>
 
-      <!-- =========================
-           API OBSERVABILITY
-      ========================== -->
-      <section class="section-block" data-role-view="admin">
+      <section class="section-block">
         <div class="section-head">
           <h2>API Observability</h2>
           <span class="subtle">Live NestJS request observations</span>
@@ -299,6 +299,33 @@
             </table>
           </div>
         </section>
+      </section>
+
+      <section class="section-block">
+        <div class="section-head">
+          <h2>Role and Access Summary</h2>
+          <span class="subtle">Demo-only visibility for multi-role workflows</span>
+        </div>
+
+        <div class="hero-grid">
+          <article class="hero-card">
+            <h2>Client Views</h2>
+            <div class="metric-value">Telemetry</div>
+            <p>Health, charts, and high-level status</p>
+          </article>
+
+          <article class="hero-card">
+            <h2>Technician Views</h2>
+            <div class="metric-value">Diagnostics</div>
+            <p>Module details, maintenance queue, field events</p>
+          </article>
+
+          <article class="hero-card">
+            <h2>Admin Views</h2>
+            <div class="metric-value">Control</div>
+            <p>Observability, oversight, roles, and escalations</p>
+          </article>
+        </div>
       </section>
     </div>
 

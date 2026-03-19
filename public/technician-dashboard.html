@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Moment Energy | Technician Dashboard</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+    <meta name="theme-color" content="#0b1020" />
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="./mood.css" />
+  </head>
+
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="topbar-brand">
+          <img src="/moment.png" alt="Moment Energy" class="brand-logo" />
+          <div class="brand-text">
+            <h1>Technician Operations Dashboard</h1>
+            <p>Module diagnostics, maintenance workflows, and field telemetry</p>
+          </div>
+        </div>
+
+        <div class="header-actions">
+          <div class="role-switcher">
+            <label for="roleSelect" class="role-label">View</label>
+            <select id="roleSelect" class="role-select">
+              <option value="client">Client</option>
+              <option value="technician" selected>Technician</option>
+              <option value="admin">Admin</option>
+            </select>
+          </div>
+       
+
+          <div class="system-meta">
+            <div id="systemClock" class="system-clock">--:--:--</div>
+            <div id="lastUpdate" class="system-update">Last Update: --</div>
+          </div>
+
+          <button id="themeToggle" class="theme-toggle-btn">🌙 Dark</button>
+        </div>
+      </header>
+
+      <section class="section-block">
+        <div class="section-head">
+          <h2>Technician Session</h2>
+          <span class="subtle">Field diagnostics and service visibility</span>
+        </div>
+        <section class="section-block">
+  <div class="section-head">
+    <h2>Operator Session</h2>
+    <span class="subtle">Demo role selection for dashboard views</span>
+  </div>
+
+  <div class="hero-card">
+    <h2>Active Role</h2>
+    <div id="activeRoleDisplay" class="metric-value">Client</div>
+    <p>Switch roles to preview client, technician, and admin dashboard states</p>
+  </div>
+</section>
+
+        <div class="hero-grid">
+          <article class="hero-card">
+            <h2>Active Role</h2>
+            <div class="metric-value">Technician</div>
+            <p>Operational maintenance dashboard</p>
+          </article>
+
+          <article class="hero-card">
+            <h2>Modules Requiring Review</h2>
+            <div id="techModulesReview" class="metric-value">--</div>
+            <p>Warning + critical battery modules</p>
+          </article>
+
+          <article class="hero-card">
+            <h2>Open Work Orders</h2>
+            <div id="techWorkOrders" class="metric-value">--</div>
+            <p>Pending service actions</p>
+          </article>
+
+          <article class="hero-card">
+            <h2>Last Field Sync</h2>
+            <div id="techFieldSync" class="metric-value">--</div>
+            <p>Latest device and technician sync</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section-block">
+        <div class="section-head">
+          <h2>Connectivity Status</h2>
+          <span class="subtle">Device communication and cloud link health</span>
+        </div>
+
+        <div class="connection-strip">
+          <div id="bleBadge" class="connection-badge">
+            <span class="indicator-dot indicator-offline"></span>
+            <span>BLE: --</span>
+          </div>
+
+          <div id="internetBadge" class="connection-badge">
+            <span class="indicator-dot indicator-offline"></span>
+            <span>Internet: --</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-block">
+        <div class="section-head">
+          <h2>Maintenance Queue</h2>
+          <span class="subtle">Prioritized service tasks</span>
+        </div>
+
+        <div class="hero-grid">
+          <article class="hero-card">
+            <h2>Critical Repairs</h2>
+            <div id="criticalRepairs" class="metric-value">--</div>
+            <p>Immediate technician action needed</p>
+          </article>
+
+          <article class="hero-card">
+            <h2>Sensor Faults</h2>
+            <div id="sensorFaults" class="metric-value">--</div>
+            <p>Reported sensor irregularities</p>
+          </article>
+
+          <article class="hero-card">
+            <h2>Battery Imbalance Cases</h2>
+            <div id="imbalanceCases" class="metric-value">--</div>
+            <p>Modules showing deviation between banks</p>
+          </article>
+
+          <article class="hero-card">
+            <h2>Offline Units</h2>
+            <div id="offlineUnits" class="metric-value">--</div>
+            <p>Units requiring communication checks</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section-block">
+        <div class="section-head">
+          <h2>Sensor Fleet</h2>
+          <span class="subtle">Battery module sensor groups and live diagnostics</span>
+        </div>
+
+        <div id="sensorGrid" class="sensor-grid"></div>
+      </section>
+
+      <section class="panel chart-panel">
+        <div class="panel-header">
+          <div class="intel-row">
+            <div class="intel-pill" id="forecastStatus" data-tone="neutral">
+              Forecast: Stable (+0.00V)
+            </div>
+            <div class="intel-pill" id="deviationStatus" data-tone="neutral">
+              Deviation: Normal (+0.00V)
+            </div>
+          </div>
+
+          <h2>Total Voltage Trend</h2>
+          <button id="toggleVoltageChart" class="chart-toggle-btn">
+            ▶ Show Chart
+          </button>
+        </div>
+
+        <div id="voltageChartWrap" class="chart-wrap collapsed">
+          <canvas id="voltageTrendChart"></canvas>
+        </div>
+
+        <div class="assistant-line" id="voltageAssistant">
+          Assistant: Monitoring voltage trend...
+        </div>
+      </section>
+
+      <section class="panel chart-panel">
+        <div class="panel-header">
+          <div class="intel-row">
+            <div class="intel-pill" id="tempForecastStatus" data-tone="neutral">
+              Thermal Forecast: Stable (+0.00°C)
+            </div>
+            <div class="intel-pill" id="tempDeviationStatus" data-tone="neutral">
+              Thermal Risk: Normal (+0.00°C)
+            </div>
+          </div>
+
+          <h2>Temperature Trend</h2>
+          <button id="toggleTempChart" class="chart-toggle-btn">
+            ▶ Show Chart
+          </button>
+        </div>
+
+        <div id="tempChartWrap" class="chart-wrap collapsed">
+          <canvas id="tempTrendChart"></canvas>
+        </div>
+
+        <div class="assistant-line" id="tempAssistant">
+          Assistant: Monitoring thermal trend...
+        </div>
+      </section>
+
+      <section class="panel chart-panel">
+        <div class="panel-header">
+          <div class="intel-row">
+            <div class="intel-pill" id="bankBalanceStatus" data-tone="neutral">
+              Balance: Healthy (Δ 0.00V)
+            </div>
+            <div class="intel-pill" id="bankLeaderStatus" data-tone="neutral">
+              Lead: Even
+            </div>
+          </div>
+
+          <h2>Voltage Bank Comparison</h2>
+          <button id="toggleBankChart" class="chart-toggle-btn">
+            ▶ Show Chart
+          </button>
+        </div>
+
+        <div id="bankChartWrap" class="chart-wrap collapsed">
+          <canvas id="bankComparisonChart"></canvas>
+        </div>
+
+        <div class="assistant-line" id="bankAssistant">
+          Assistant: Monitoring bank balance...
+        </div>
+      </section>
+
+      <section class="section-block">
+        <div class="section-head">
+          <h2>Recent Technician Actions</h2>
+          <span class="subtle">Service activity and diagnostic events</span>
+        </div>
+
+        <div class="table-scroll">
+          <table class="observability-table">
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Module</th>
+                <th>Issue</th>
+                <th>Priority</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="technicianTableBody">
+              <tr>
+                <td colspan="5">No technician events yet.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

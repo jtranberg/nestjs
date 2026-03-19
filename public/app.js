@@ -8,6 +8,78 @@ let streak = 0;
 let themeManager = null;
 let chartManager = null;
 
+const OBSERVABILITY_URL = "/observability";
+const ROLE_STORAGE_KEY = "energy-dashboard-role";
+const DEFAULT_ROLE = "client";
+
+const ROLE_ROUTES = {
+  client: "./index.html",
+  technician: "./technician-dashboard.html",
+  admin: "./admin-dashboard.html",
+};
+
+/* =========================
+   ROLE VIEW
+========================= */
+function formatRoleLabel(role = DEFAULT_ROLE) {
+  return role.charAt(0).toUpperCase() + role.slice(1);
+}
+
+function setCurrentRole(role) {
+  localStorage.setItem(ROLE_STORAGE_KEY, role);
+}
+
+function getRoleFromPath() {
+  const path = window.location.pathname;
+
+  if (path.includes("technician-dashboard.html")) return "technician";
+  if (path.includes("admin-dashboard.html")) return "admin";
+  return "client";
+}
+
+function updateRoleDisplay(role) {
+  const activeRoleDisplay = document.getElementById("activeRoleDisplay");
+  const roleSelect = document.getElementById("roleSelect");
+
+  if (activeRoleDisplay) {
+    activeRoleDisplay.textContent = formatRoleLabel(role);
+  }
+
+  if (roleSelect) {
+    roleSelect.value = role;
+  }
+
+  document.body.classList.remove(
+    "role-client",
+    "role-technician",
+    "role-admin"
+  );
+  document.body.classList.add(`role-${role}`);
+}
+
+function goToRolePage(role) {
+  const nextRoute = ROLE_ROUTES[role] || ROLE_ROUTES.client;
+  window.location.href = nextRoute;
+}
+
+function initRoleSwitcher() {
+  const roleSelect = document.getElementById("roleSelect");
+  const pageRole = getRoleFromPath();
+
+  setCurrentRole(pageRole);
+  updateRoleDisplay(pageRole);
+
+  if (!roleSelect) return;
+
+  roleSelect.addEventListener("change", (event) => {
+    const target = event.target;
+    const nextRole =
+      target && "value" in target ? target.value : DEFAULT_ROLE;
+
+    setCurrentRole(nextRole);
+    goToRolePage(nextRole);
+  });
+}
 /* =========================
    SYSTEM CLOCK
 ========================= */
@@ -178,6 +250,100 @@ function badgeMarkup(
 }
 
 /* =========================
+   OBSERVABILITY
+========================= */
+async function loadObservability() {
+  try {
+    const res = await fetch(OBSERVABILITY_URL);
+
+    if (!res.ok) {
+      throw new Error(`Observability request failed: ${res.status}`);
+    }
+
+    const data = await res.json();
+    renderObservability(data);
+  } catch (error) {
+    console.error("Failed to load observability data:", error);
+
+    const totalEl = document.getElementById("obsTotalRequests");
+    const successEl = document.getElementById("obsSuccessRate");
+    const latencyEl = document.getElementById("obsAvgLatency");
+    const failedEl = document.getElementById("obsFailedRequests");
+    const tbody = document.getElementById("observabilityTableBody");
+
+    if (totalEl) totalEl.textContent = "--";
+    if (successEl) successEl.textContent = "--";
+    if (latencyEl) latencyEl.textContent = "--";
+    if (failedEl) failedEl.textContent = "--";
+
+    if (tbody) {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="5" class="obs-empty">Failed to load observability data.</td>
+        </tr>
+      `;
+    }
+  }
+}
+
+function renderObservability(data) {
+  const totalEl = document.getElementById("obsTotalRequests");
+  const successEl = document.getElementById("obsSuccessRate");
+  const latencyEl = document.getElementById("obsAvgLatency");
+  const failedEl = document.getElementById("obsFailedRequests");
+  const tbody = document.getElementById("observabilityTableBody");
+
+  if (totalEl) totalEl.textContent = String(data.summary?.total ?? 0);
+  if (successEl) successEl.textContent = `${data.summary?.successRate ?? 0}%`;
+  if (latencyEl) latencyEl.textContent = `${data.summary?.avgLatency ?? 0} ms`;
+  if (failedEl) failedEl.textContent = String(data.summary?.failed ?? 0);
+
+  if (!tbody) return;
+
+  tbody.innerHTML = "";
+
+  const events = Array.isArray(data.events) ? data.events.slice(0, 12) : [];
+
+  if (events.length === 0) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="5" class="obs-empty">No API observations yet.</td>
+      </tr>
+    `;
+    return;
+  }
+
+  events.forEach((event) => {
+    const row = document.createElement("tr");
+
+    const statusClass =
+      event.statusCode >= 200 && event.statusCode < 400
+        ? "obs-status-ok"
+        : "obs-status-fail";
+
+    row.innerHTML = `
+      <td>${new Date(event.timestamp).toLocaleTimeString()}</td>
+      <td>${event.method}</td>
+      <td class="obs-path">${event.path}</td>
+      <td class="${statusClass}">${event.statusCode}</td>
+      <td>${event.durationMs} ms</td>
+    `;
+
+    tbody.appendChild(row);
+  });
+}
+
+function initObservability() {
+  const refreshBtn = document.getElementById("refreshObservabilityBtn");
+
+  if (refreshBtn) {
+    refreshBtn.addEventListener("click", loadObservability);
+  }
+
+  loadObservability();
+}
+
+/* =========================
    DASHBOARD LOAD
 ========================= */
 async function loadDashboard() {
@@ -301,6 +467,7 @@ async function loadDashboard() {
 ========================= */
 document.addEventListener("DOMContentLoaded", () => {
   startSystemClock();
+  initRoleSwitcher();
 
   themeManager = new ThemeManager({
     buttonId: "themeToggle",
@@ -316,6 +483,9 @@ document.addEventListener("DOMContentLoaded", () => {
   themeManager.init();
   chartManager.init();
 
+  initObservability();
   loadDashboard();
+
   setInterval(loadDashboard, 5000);
+  setInterval(loadObservability, 5000);
 });

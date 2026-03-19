@@ -1,0 +1,86 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #0b1020;
+  color: #fff;
+}
+
+.table-wrap {
+  max-height: 320px;
+  overflow-y: auto;
+  overflow-x: auto;
+}
+
+.observability-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 720px;
+}
+
+.page {
+  padding: 24px;
+}
+
+.header h1 {
+  margin-bottom: 8px;
+}
+
+.header p {
+  margin-top: 0;
+  opacity: 0.8;
+}
+
+.controls {
+  display: flex;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+button {
+  padding: 10px 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.card,
+.table-card {
+  background: #131a2e;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 16px;
+}
+
+.label {
+  font-size: 0.9rem;
+  opacity: 0.75;
+  margin-bottom: 8px;
+}
+
+.value {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.table-card h2 {
+  margin-top: 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
