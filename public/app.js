@@ -418,7 +418,10 @@ function renderObservability(data) {
 }
 
 function initObservability() {
+  const tbody = document.getElementById("observabilityTableBody");
   const refreshBtn = document.getElementById("refreshObservabilityBtn");
+
+  if (!tbody && !refreshBtn) return;
 
   if (refreshBtn) {
     refreshBtn.addEventListener("click", loadObservability);
@@ -590,5 +593,11 @@ document.addEventListener("DOMContentLoaded", () => {
   loadDashboard();
 
   setInterval(loadDashboard, 5000);
-  setInterval(loadObservability, 5000);
+
+  if (
+    document.getElementById("observabilityTableBody") ||
+    document.getElementById("refreshObservabilityBtn")
+  ) {
+    setInterval(loadObservability, 5000);
+  }
 });

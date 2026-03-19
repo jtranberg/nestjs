@@ -177,7 +177,7 @@ body.light-theme .topbar .brand-text p {
  
   .topbar-brand,
   .header-actions {
-    flex: none;        /* 🔥 key fix */
+    flex: none;        
     width: 100%;
   }
 }
