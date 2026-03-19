@@ -336,9 +336,28 @@ function badgeMarkup(
 /* =========================
    OBSERVABILITY
 ========================= */
+function hasObservabilityUI() {
+  return Boolean(
+    document.getElementById("obsTotalRequests") &&
+      document.getElementById("obsSuccessRate") &&
+      document.getElementById("obsAvgLatency") &&
+      document.getElementById("obsFailedRequests") &&
+      document.getElementById("observabilityTableBody")
+  );
+}
+
 async function loadObservability() {
+  if (!hasObservabilityUI()) return;
+
   try {
     const res = await fetch(OBSERVABILITY_URL);
+
+    const contentType = res.headers.get("content-type") || "";
+    if (!contentType.includes("application/json")) {
+      throw new Error(
+        `Observability did not return JSON. Got: ${contentType}`
+      );
+    }
 
     if (!res.ok) {
       throw new Error(`Observability request failed: ${res.status}`);
@@ -418,10 +437,9 @@ function renderObservability(data) {
 }
 
 function initObservability() {
-  const tbody = document.getElementById("observabilityTableBody");
-  const refreshBtn = document.getElementById("refreshObservabilityBtn");
+  if (!hasObservabilityUI()) return;
 
-  if (!tbody && !refreshBtn) return;
+  const refreshBtn = document.getElementById("refreshObservabilityBtn");
 
   if (refreshBtn) {
     refreshBtn.addEventListener("click", loadObservability);
@@ -594,10 +612,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   setInterval(loadDashboard, 5000);
 
-  if (
-    document.getElementById("observabilityTableBody") ||
-    document.getElementById("refreshObservabilityBtn")
-  ) {
+  if (hasObservabilityUI()) {
     setInterval(loadObservability, 5000);
   }
 });
