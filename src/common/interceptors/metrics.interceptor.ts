@@ -6,7 +6,7 @@ import {
   NestInterceptor,
 } from '@nestjs/common';
 import { Observable, tap, catchError, throwError } from 'rxjs';
-import { ObservabilityService } from '../../obseravability/observability.service';
+import { ObservabilityService } from '../../observability/observability.service';
 
 @Injectable()
 export class MetricsInterceptor implements NestInterceptor {
