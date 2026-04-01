@@ -7,7 +7,7 @@
 
 ## Preview
 
-![Telemetry Dashboard Screenshot](./screenshot.png)
+![Telemetry Dashboard Screenshot](./public/screenshot.png)
 Backend observability and telemetry system built with NestJS to capture, summarize, and expose API request metrics for operational visibility.
 
 ## Features
