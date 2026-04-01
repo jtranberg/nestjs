@@ -5,6 +5,9 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178c6)
 ![Status](https://img.shields.io/badge/status-active-success)
 
+## Preview
+
+![Telemetry Dashboard Screenshot](./assets/telemetry-dashboard.png)
 Backend observability and telemetry system built with NestJS to capture, summarize, and expose API request metrics for operational visibility.
 
 ## Features
